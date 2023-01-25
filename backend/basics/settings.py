@@ -23,8 +23,8 @@ to_json = {
                     "name": "Begzod",
                     "surname": "Jumaniyozov",
                     "age": 21,
-                    "attendance": 100,
-                    "score": 100,
+                    "attendance": 90,
+                    "score": 90,
                     "card_id": "asd21wedsd",
                     "password": "12345678"
                 },
@@ -53,8 +53,8 @@ to_json = {
                     "name": "Mehroj",
                     "surname": "Ibodov",
                     "age": 27,
-                    "attendance": 70,
-                    "score": 90,
+                    "attendance": 50,
+                    "score": 50,
                     "card_id": "qwds21w12ssd",
                     "password": "12345678"
                 }

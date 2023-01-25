@@ -121,7 +121,7 @@ submit.addEventListener("click", () => {
 })
 
 
-fetch("/lessons/get_subjects/", {
+fetch("/get_subjects", {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
     headers: {
         'Content-Type': 'application/json'

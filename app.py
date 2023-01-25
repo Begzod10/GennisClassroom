@@ -13,6 +13,7 @@ def hello_world():  # put application's code here
 
 
 from backend.basics.views import *
+from backend.lessons.views import *
 
 if __name__ == '__main__':
     app.run()
