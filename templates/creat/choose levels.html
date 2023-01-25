@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="{{ url_for("choose_levels") }}" method="post">
+    <select name="level" id="">
+        {% for sub in levels %}
+            <option value="{{ sub.id }}">{{ sub.name }}</option>
+        {% endfor %}
+    </select>
+    <button>Sumbit</button>
+</form>
+</body>
+</html>

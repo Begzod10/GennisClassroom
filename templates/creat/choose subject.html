@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="{{ url_for("choose") }}" method="post">
+    <select name="subject" id="">
+        {% for sub in subject %}
+            <option value="" data-id="{{ sub.id }}">{{ sub.name }}</option>
+        {% endfor %}
+    </select>
+    <button>Sumbit</button>
+</form>
+
+<script>
+    let checkboxes = document.querySelectorAll('button');
+    checkboxes.forEach((check,) => {
+        check.addEventListener('click', function () {
+            let subject_id = check.dataset.id
+            fetch('/test', {
+                method: "POST",
+                body: JSON.stringify({
+                   "subject_id": subject_id
+                }),
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            })
+        })
+    })
+</script>
+</body>
+</html>

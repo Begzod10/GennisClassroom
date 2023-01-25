@@ -6,8 +6,9 @@ class Subject(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     img = Column(String)
-    levels = relationship("QuizLevels", backref="subject", order_by="QuizLevels.id")
+    levels = relationship("SubjectLevel", backref="subject", order_by="SubjectLevel.id")
     answer = relationship('ExerciseAnswers', backref="subject", order_by="ExerciseAnswers.id")
+    lesson = relationship('Lesson', backref="subject", order_by="Lesson.id")
 
 
 class LevelCategory(db.Model):
@@ -17,11 +18,11 @@ class LevelCategory(db.Model):
     ot = Column(Float)
     do = Column(Float)
     students = relationship("Student", backref="level", order_by="Student.id", lazy="select")
+    lesson = relationship('Lesson', backref="level_category", order_by="Lesson.id")
 
 
-class QuizLevels(db.Model):
-    __tablename__ = "quiz_levels"
+class SubjectLevel(db.Model):
+    __tablename__ = "subject_level"
     id = Column(Integer, primary_key=True)
+    name = Column(String)
     subject_id = Column(Integer, ForeignKey("subject.id"))
-    levels = Column(String)
-    # questions = db.relationship("Questions", backref="quiz_levels", order_by="Questions.id")

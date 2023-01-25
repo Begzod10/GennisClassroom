@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="{{ url_for("lesson") }}" method="post" enctype="multipart/form-data">
+    <input type="text" name="title">
+    <input type="text" name="desc">
+    <input type="file" name="img">
+    <button>Sumbit</button>
+</form>
+</body>
+</html>

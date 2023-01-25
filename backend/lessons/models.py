@@ -6,6 +6,8 @@ from backend.models.basic_model import *
 class Lesson(db.Model):
     __tablename__ = "lesson"
     id = Column(Integer, primary_key=True)
+    subject_id = Column(Integer, ForeignKey("subject.id"))
+    level_id = Column(Integer, ForeignKey("level_category.id"))
     title = Column(String)
     desc = Column(String)
     img = Column(String)
