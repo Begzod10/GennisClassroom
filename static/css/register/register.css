@@ -1,0 +1,105 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;400&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+a {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.home {
+  width: 100%;
+}
+.home nav {
+  width: 100%;
+  height: 60px;
+  background-color: #EBC853;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+.home nav > div {
+  display: flex;
+  align-items: center;
+}
+.home nav img {
+  width: 40px;
+  border-radius: 50%;
+}
+.home nav .info {
+  margin: 0 10px;
+}
+.home main {
+  display: flex;
+  height: calc(100vh - 60px);
+}
+
+.register {
+  width: 100%;
+  height: 100vh;
+  background-image: url("../../img/register background.png");
+  background-size: cover;
+  position: relative;
+}
+.register__block {
+  position: absolute;
+  left: 20%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 450px;
+  min-height: 400px;
+  background-color: white;
+  box-shadow: -88px 207px 90px rgba(144, 142, 142, 0.01), -49px 117px 76px rgba(144, 142, 142, 0.05), -22px 52px 56px rgba(144, 142, 142, 0.09), -5px 13px 31px rgba(144, 142, 142, 0.1), 0px 0px 0px rgba(144, 142, 142, 0.1);
+  padding: 55px;
+}
+.register__block form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.register__block label {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 25px;
+}
+.register__block label span {
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  color: #000000;
+  margin-bottom: 14px;
+}
+.register__block label input {
+  width: 100%;
+  height: 60px;
+  padding: 18px 22px;
+  font-size: 18px;
+}
+.register__block .submit {
+  outline: none;
+  border: none;
+  padding: 11px 50px;
+  background-color: #EBC853;
+  font-size: 18px;
+  color: white;
+  transition: all 0.2s;
+}
+.register__block .submit:hover, .register__block .submit:focus {
+  transform: scale(1.1);
+  box-shadow: 0 5px 10px 1px rgba(0, 0, 0, 0.25);
+}
+.register__block .submit:active {
+  transform: scale(0.9);
+  box-shadow: 0 5px 10px 1px rgba(0, 0, 0, 0.25);
+}
+
+/*# sourceMappingURL=register.css.map */

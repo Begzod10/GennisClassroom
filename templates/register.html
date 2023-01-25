@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="../static/css/register/register.css">
+</head>
+<body>
+
+
+<section class="register">
+    <div class="register__block">
+        <form action="{{ url_for('login') }}" method="post">
+
+            <label for="username">
+                <span>Username</span>
+                <input id="username" placeholder="" name="username" type="text" required>
+            </label>
+
+            <label for="password">
+                <span>Parol</span>
+                <input id="password" name="password" type="password" required>
+            </label>
+
+            <input type="submit" class="submit" value="Tasdiqlash">
+        </form>
+    </div>
+</section>
+
+
+</body>
+</html>

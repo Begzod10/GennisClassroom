@@ -1,0 +1,228 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;400&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+a {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.home {
+  width: 100%;
+}
+.home nav {
+  width: 100%;
+  height: 60px;
+  background-color: #EBC853;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+.home nav > div {
+  display: flex;
+  align-items: center;
+}
+.home nav img {
+  width: 40px;
+  border-radius: 50%;
+}
+.home nav .info {
+  margin: 0 10px;
+}
+.home main {
+  display: flex;
+  height: calc(100vh - 60px);
+}
+
+.subject {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+.subject-nav {
+  width: 20%;
+  border-right: 1px solid black;
+  background-color: #383838;
+  height: 100%;
+}
+.subject-nav__header {
+  padding: 0 25px;
+  height: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.subject-nav__header > div {
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+}
+.subject-nav__header > div:last-child {
+  font-size: 16px;
+}
+.subject-nav__container {
+  height: 85%;
+  overflow-y: auto;
+  padding: 25px;
+}
+.subject-nav__container::-webkit-scrollbar {
+  width: 10px;
+}
+.subject-nav__container::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+.subject-nav__container::-webkit-scrollbar-thumb {
+  background-color: #EBC853;
+  outline: 1px solid slategrey;
+}
+.subject-nav__content {
+  display: flex;
+  flex-direction: column;
+}
+.subject-nav__content-title {
+  font-size: 18px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.subject-nav__content-title span:last-child {
+  transform: rotate(-90deg);
+}
+.subject-nav__content-title.active span:last-child {
+  transform: rotate(0);
+}
+.subject-nav__content-container {
+  margin-top: 10px;
+  padding-left: 30px;
+  overflow: hidden;
+  height: fit-content;
+}
+.subject-nav__content-item {
+  color: white;
+  margin: 20px 0;
+}
+.subject-nav__content-item a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.subject-nav__content-item a:hover {
+  color: #EBC853;
+}
+.subject-content {
+  width: 80%;
+  height: 100%;
+  padding: 50px;
+  overflow-y: scroll;
+}
+.subject-content::-webkit-scrollbar {
+  width: 10px;
+}
+.subject-content::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+.subject-content::-webkit-scrollbar-thumb {
+  background-color: #737373;
+  outline: 1px solid slategrey;
+}
+.subject-content video {
+  width: 100%;
+  height: 500px;
+}
+.subject-content .title {
+  margin: 30px 0;
+  font-size: 30px;
+  font-weight: bold;
+}
+.subject-content .desc {
+  font-size: 18px;
+  line-height: 27px;
+}
+.subject-content .exam {
+  display: flex;
+  flex-direction: column;
+  margin: 25px 0;
+  border-top: 2px solid black;
+  padding-top: 25px;
+}
+.subject-content .exam-title {
+  margin-bottom: 10px;
+  font-size: 26px;
+}
+.subject-content .exam form {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.subject-content .exam form label {
+  margin-top: 25px;
+  width: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.subject-content .exam form label span {
+  margin: 0 10px;
+  font-size: 20px;
+}
+.subject-content .exam form label input {
+  width: 20px;
+  height: 20px;
+}
+.subject-content .exam form .input-submit {
+  width: 100%;
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.subject-content .exam form .input-submit input {
+  padding: 13px 25px;
+  border: 2px solid #EBC853;
+  outline: none;
+  background-color: white;
+  cursor: pointer;
+  font-size: 17px;
+}
+.subject-content .exam form .input-submit input:hover {
+  background-color: #EBC853;
+  color: white;
+}
+.subject-content .exam form h1 {
+  width: 100%;
+  font-size: 24px;
+}
+.subject-content .location {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.subject-content .location div {
+  border: 1px solid #737373;
+  background-color: #737373;
+  color: white;
+  padding: 13px 20px;
+  cursor: pointer;
+  transition: all 0.1s;
+  user-select: none;
+}
+.subject-content .location div:active {
+  transform: scale(0.9);
+}
+.subject-content .location div:hover {
+  background-color: #EBC853;
+  border: 1px solid #EBC853;
+}
+
+/*# sourceMappingURL=subject.css.map */
