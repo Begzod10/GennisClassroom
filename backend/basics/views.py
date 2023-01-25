@@ -7,7 +7,7 @@ from werkzeug.security import *
 # Create your views here.
 
 
-@app.route('/login/', methods=['POST', 'GET'])
+@app.route('/', methods=['POST', 'GET'])
 def login():
     if request.method == "POST":
 
@@ -17,7 +17,11 @@ def login():
         if user:
             if user and check_password_hash(user.password, password):
                 session['username'] = user.username
-                return redirect(url_for('view_subjects'))
+                student = Student.query.filter(Student.user_id == user.id).first()
+                if student.subjects:
+                    return redirect(url_for('my_subjects'))
+                else:
+                    return redirect(url_for('view_subjects'))
             else:
                 return redirect(url_for('login'))
         else:
@@ -45,7 +49,7 @@ def login():
             else:
                 return redirect(url_for('login'))
     write_json(data=to_json)
-    return render_template('register.html')
+    return render_template('login.html')
 
 
 def write_json(data, filename='api_kundalik.json'):

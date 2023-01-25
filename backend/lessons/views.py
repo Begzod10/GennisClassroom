@@ -48,5 +48,7 @@ def my_subjects():
 @app.route('/my_lesson/<int:sub_id>')
 def my_lesson(sub_id):
     subject = Subject.query.filter(Subject.id == sub_id).first()
+    subject_level = SubjectLevel.query.filter(SubjectLevel.subject_id == subject.id).first()
+    lessons = Lesson.query.filter(Lesson.level_id == subject_level.id).order_by(Lesson.id).all()
 
-    pass
+    return render_template('subject/subject.html')

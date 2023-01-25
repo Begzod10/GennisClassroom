@@ -38,3 +38,30 @@ class ExerciseAnswers(db.Model):
     subject_id = Column(Integer, ForeignKey('subject.id'))
     desc = Column(String)
     answer = Column(Boolean, default=False)
+
+
+class Essay(db.Model):
+    __tablename__ = "essay"
+    id = Column(Integer, primary_key=True)
+    essay_text = Column(Text)
+    student_id = Column(Integer, ForeignKey('student.id'))
+    teacher_id = Column(Integer, ForeignKey('teacher.id'))
+
+
+class EssayError(db.Model):
+    __tablename__ = "essay_error"
+    id = Column(Integer, primary_key=True)
+    type = Column(String)
+    comment = Column(String)
+    error = Column(String)
+    teacher_id = Column(Integer, ForeignKey('teacher.id'))
+    essay_id = Column(Integer, ForeignKey('essay.id'))
+    answer = Column(String)
+
+
+class EssayPeerResult(db.Model):
+    __tablename__ = "essay_peer_result"
+    id = Column(Integer, primary_key=True)
+    error_id = Column(Integer, ForeignKey('essay_error.id'))
+    student_id = Column(Integer, ForeignKey('student.id'))
+    essay_id = Column(Integer, ForeignKey('essay.id'))
