@@ -3,6 +3,7 @@ from backend.models.basic_model import *
 
 # Create your models here.
 
+
 class Lesson(db.Model):
     __tablename__ = "lesson"
     id = Column(Integer, primary_key=True)

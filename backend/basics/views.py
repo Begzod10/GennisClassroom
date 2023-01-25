@@ -30,7 +30,8 @@ def login():
                             exist = True
                             rate = round((student['attendance'] * 0.7) + (student['score'] * 0.3)) / 100
                             password = generate_password_hash(student['password'], method='sha256')
-                            add = User(name=student['name'], surname=student['surname'], password=password)
+                            add = User(username=student['card_id'], name=student['name'], surname=student['surname'],
+                                       password=password)
                             add.add()
 
                             category = LevelCategory.query.filter(
@@ -38,6 +39,7 @@ def login():
 
                             student = Student(user_id=add.id, level_category=category.id)
                             student.add()
+                            session['username'] = add.username
             if exist:
                 return redirect(url_for('view_subjects'))
             else:

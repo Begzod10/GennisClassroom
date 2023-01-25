@@ -46,10 +46,14 @@ class Student(db.Model):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('user.id'))
     level_category = Column(Integer, ForeignKey('level_category.id'))
+    subjects = relationship("Subject", secondary="student_subject", lazy="select", order_by="Subject.id")
 
     def add(self):
         db.session.add(self)
         db.session.commit()
+
+    def commit(self):
+        db.session.commit(self)
 
 
 db.Table('student_subject',
