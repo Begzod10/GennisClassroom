@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/creat/creat_test.css">
+</head>
+<body>
+
+{#<div class="menu">#}
+{#    <a href="">Home</a>#}
+{#    <a href="{{ url_for("register") }}">Register</a>#}
+{#    <a href="{{ url_for("login") }}">Login</a>#}
+{#    <a href="{{ url_for("register_teacher") }}">Add teacher</a>#}
+{#    <a href="{{ url_for("creat_group") }}">Creat group</a>#}
+{#    <a href="{{ url_for("profile") }}">Profile</a>#}
+{#    <a href="{{ url_for("groups") }}">Groups</a>#}
+{#    <a href="{{ url_for("ielts_result") }}">Ielts_result</a>#}
+{#    <a href="{{ url_for("choose") }}">creat_question</a>#}
+{#    <a href="{{ url_for("subject") }}">subject</a>#}
+{#    <a href="{{ url_for("levels") }}">levels</a>#}
+{#    <a href="{{ url_for("creat_variant") }}">creat_variant</a>#}
+{#</div>#}
+<div class="container">
+    <div class="variant_menu">
+        {% for type in types %}
+            <a href="#" class="controll_active" data-id="{{ type.id }}">{{ type.name }}</a>
+        {% endfor %}
+    </div>
+    <div class="cont2">
+        <div class="table1">
+            <input type="text" placeholder="Question" name="question" class="question">
+            <div class="plus">
+                +
+            </div>
+        </div>
+        <div class="table2">
+
+            <div class="variant">
+
+            </div>
+            <div class="plus2">
+                +
+            </div>
+            <div class="variant">
+                <div class="inp">
+                    <h4>1)</h4>
+                    <input type="file" id="file" accept="image/*" placeholder="Enter your variant">
+                    <input type="checkbox">
+                </div>
+                <div class="inp">
+                    <h4>2)</h4>
+                    <input type="file" placeholder="Enter your variant">
+                    <input type="checkbox">
+                </div>
+                <div class="inp">
+                    <h4>3)</h4>
+                    <input type="file" placeholder="Enter your variant">
+                    <input type="checkbox">
+                </div>
+                <div class="inp">
+                    <h4>4)</h4>
+                    <input type="file" placeholder="Enter your variant">
+                    <input type="checkbox">
+                </div>
+            </div>
+            <div class="variant">
+                <div class="inp">
+                    <h4>1)</h4>
+                    <input type="text" placeholder="Enter your variant">
+                    <input type="checkbox">
+                </div>
+                <div class="inp">
+                    <h4>2)</h4>
+                    <input type="text" placeholder="Enter your variant">
+                    <input type="checkbox">
+                    <div class="variant">
+
+                    </div>
+                    <div class="plus2">
+                        +
+                    </div>
+                    <div class="variant">
+                        <div class="inp">
+                            <h4>1)</h4>
+                            <input class="file" type="file" placeholder="Enter your variant">
+                            <input type="checkbox">
+                        </div>
+                        <div class="inp">
+                            <h4>2)</h4>
+                            <input class="file" type="file" placeholder="Enter your variant">
+                            <input type="checkbox">
+                        </div>
+                        <div class="inp">
+                            <h4>3)</h4>
+                            <input class="file" type="file" placeholder="Enter your variant">
+                            <input type="checkbox">
+                        </div>
+                        <div class="inp">
+                            <h4>4)</h4>
+                            <input class="file" type="file" placeholder="Enter your variant">
+                            <input type="checkbox">
+                        </div>
+                    </div>
+                    <div class="variant">
+                        <div class="inp">
+                            <h4>1)</h4>
+                            <input type="text" placeholder="Enter your variant">
+                            <input type="checkbox">
+                        </div>
+                        <div class="inp">
+                            <h4>2)</h4>
+                            <input type="text" placeholder="Enter your variant">
+                            <input type="checkbox">
+                        </div>
+                    </div>
+                </div>
+                <div class="plus2">
+                    +
+                </div>
+                <div class="variant">
+
+                </div>
+                <div class="variant">
+                    <div class="inp">
+                        <h4>1)</h4>
+                        <input type="text" placeholder="Enter your variant">
+                        <input type="checkbox">
+                    </div>
+                    <div class="inp">
+                        <h4>2)</h4>
+                        <input type="text" placeholder="Enter your variant">
+                        <input type="checkbox">
+                    </div>
+                </div>
+
+            </div>
+            <button class="button" data-id="{{ level }}">Sumbit</button>
+        </div>
+    </div>
+</div>
+<script src="/static/js/creat_test.js"></script>
+
+</body>
+</html>

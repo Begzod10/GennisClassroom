@@ -1,5 +1,7 @@
 from app import *
 
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+
 
 def get_current_user():
     user_result = None

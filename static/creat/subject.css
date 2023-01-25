@@ -1,0 +1,40 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.menu {
+    width: 1400px;
+    height: 50px;
+    border-radius: 10px;
+    background-image: linear-gradient(to left, #0061ff, #60efff);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #0f536a;
+    font-size: 30px;
+}
+.subject{
+    width: 400px;
+    height: 400px;
+    border-radius: 20px;
+    border: 2px black solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+input{
+    width: 300px;
+    height: 20px;
+    margin-top: 50px;
+    border-radius: 10px;
+}
+button{
+    margin-top: 20px;
+}
