@@ -2,12 +2,17 @@ from app import *
 import json
 from backend.basics.settings import *
 from werkzeug.security import *
+from gingerit.gingerit import GingerIt
+from english_words import get_english_words_set
+import enchant
+
+parser = GingerIt()
+
+web2lowerset = get_english_words_set(['web2'], lower=True)
+d = enchant.Dict("en_US")
 
 
-# Create your views here.
-
-
-@app.route('/login/', methods=['POST', 'GET'])
+@app.route('/', methods=['POST', 'GET'])
 def login():
     if request.method == "POST":
 
@@ -17,7 +22,11 @@ def login():
         if user:
             if user and check_password_hash(user.password, password):
                 session['username'] = user.username
-                return redirect(url_for('view_subjects'))
+                student = Student.query.filter(Student.user_id == user.id).first()
+                if student.subjects:
+                    return redirect(url_for('my_subjects'))
+                else:
+                    return redirect(url_for('view_subjects'))
             else:
                 return redirect(url_for('login'))
         else:
@@ -45,7 +54,17 @@ def login():
             else:
                 return redirect(url_for('login'))
     write_json(data=to_json)
-    return render_template('register.html')
+    original_text = "my nam Begzod"
+    # text = original_text.split(' ')
+    # converted_text = ''
+    # for tx in text:
+    #     checking = d.check(tx)
+    #     if checking == False:
+    #         converted_text = original_text.replace(tx, "something")
+
+    print(parser.parse(original_text))
+
+    return render_template('login.html')
 
 
 def write_json(data, filename='api_kundalik.json'):

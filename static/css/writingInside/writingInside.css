@@ -1,0 +1,143 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;400&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+a {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.home {
+  width: 100%;
+}
+.home nav {
+  width: 100%;
+  height: 60px;
+  background-color: #EBC853;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+.home nav > div {
+  display: flex;
+  align-items: center;
+}
+.home nav img {
+  width: 40px;
+  border-radius: 50%;
+}
+.home nav .info {
+  margin: 0 10px;
+}
+.home main {
+  display: flex;
+  height: calc(100vh - 60px);
+}
+
+.writingInside {
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+}
+.writingInside__container {
+  width: 45%;
+  margin: 0 10px;
+}
+.writingInside__container .title {
+  font-size: 20px;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 15px;
+}
+.writingInside__container .desc {
+  padding: 20px;
+  border: 2px solid black;
+}
+.writingInside .modal {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.56);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.6s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.writingInside .modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+.writingInside .modal__content {
+  width: 500px;
+  height: 500px;
+  background-color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+.writingInside .modal__content::-webkit-scrollbar {
+  width: 10px;
+}
+.writingInside .modal__content::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+.writingInside .modal__content::-webkit-scrollbar-thumb {
+  background-color: #6c6c6c;
+  outline: 1px solid slategrey;
+}
+.writingInside .modal__content textarea {
+  resize: none;
+  width: 100%;
+  height: 200px;
+  padding: 20px;
+}
+.writingInside .modal__content label {
+  margin: 10px 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.writingInside .modal__content label span {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+.writingInside .modal__content label input, .writingInside .modal__content label select {
+  height: 45px;
+}
+.writingInside .modal__content label option {
+  min-height: 30px;
+}
+.writingInside .modal__content label input {
+  padding: 10px;
+}
+.writingInside .modal__content .input-submit {
+  margin-top: 25px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.writingInside .modal__content .input-submit input {
+  padding: 15px 30px;
+  border: 1px solid black;
+  background-color: white;
+}
+.writingInside .modal__content .input-submit input:hover {
+  background-color: #EBC853;
+  border: 1px solid black;
+}
+
+/*# sourceMappingURL=writingInside.css.map */

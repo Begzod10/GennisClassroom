@@ -1,0 +1,82 @@
+@import "../style"
+
+.writingInside
+  width: 100%
+  height: 100%
+  padding: 30px
+  display: flex
+  justify-content: center
+  &__container
+    width: 45%
+    margin: 0 10px
+    .title
+      font-size: 20px
+      font-weight: 400
+      text-align: center
+      margin-bottom: 15px
+    .desc
+      padding: 20px
+      border: 2px solid black
+  .modal
+    width: 100%
+    height: 100vh
+    position: fixed
+    top: 0
+    background-color: rgba(0, 0, 0, 0.56)
+    opacity: 0
+    visibility: hidden
+    transition: all .6s
+    display: flex
+    align-items: center
+    justify-content: center
+    &.active
+      opacity: 1
+      visibility: visible
+    &__content
+      width: 500px
+      height: 500px
+      background-color: white
+      padding: 20px
+      display: flex
+      flex-direction: column
+      overflow: auto
+      &::-webkit-scrollbar
+        width: 10px
+      &::-webkit-scrollbar-track
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3)
+      &::-webkit-scrollbar-thumb
+        background-color: #6c6c6c
+        outline: 1px solid slategrey
+      textarea
+        resize: none
+        width: 100%
+        height: 200px
+        padding: 20px
+      label
+        margin: 10px 0
+        width: 100%
+        display: flex
+        flex-direction: column
+        justify-content: flex-start
+        span
+          font-size: 18px
+          margin-bottom: 10px
+        input,select
+          height: 45px
+        option
+          min-height: 30px
+        input
+          padding: 10px
+      .input-submit
+        margin-top: 25px
+        width: 100%
+        display: flex
+        align-items: center
+        justify-content: center
+        input
+          padding: 15px 30px
+          border: 1px solid black
+          background-color: white
+          &:hover
+            background-color: #EBC853
+            border: 1px solid black

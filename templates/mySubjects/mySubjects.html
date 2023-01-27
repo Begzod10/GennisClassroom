@@ -28,7 +28,7 @@
         <div class="mySubjects">
             {% for sub in student.subjects %}
             <div class="mySubjects__item">
-                <a href="{{ url_for('') }}">
+                <a href="{{ url_for('my_lesson', sub_id=sub.id) }}">
                     <div class="mySubjects__item-img">
                         <img src="{{ sub.img }}" alt="English">
                         <div class="mySubjects__item-percentage" style="--percentage: 0%"></div>
