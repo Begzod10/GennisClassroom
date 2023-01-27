@@ -5,8 +5,10 @@
     <title>Title</title>
 </head>
 <body>
-{% for les in lesson %}
-    <a href="{{ url_for("exercise", lesson_id=les.id) }}">{{ les.title }}</a>
+
+{% for subject in subjects %}
+    <a href="{{ url_for("choose_level_lesson", subject_id=subject.id) }}">{{ subject.name }}</a>
 {% endfor %}
+
 </body>
 </html>

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for subject in subjects %}
+    <a href="{{ url_for("filter_list_level", subject_id=subject.id) }}">{{ subject.name }}</a>
+{% endfor %}
+
+</body>
+</html>

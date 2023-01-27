@@ -1,5 +1,7 @@
 from backend.models.basic_model import *
 
+from backend.basics.models import *
+
 
 # Create your models here.
 
@@ -7,8 +9,9 @@ from backend.models.basic_model import *
 class Lesson(db.Model):
     __tablename__ = "lesson"
     id = Column(Integer, primary_key=True)
+    type_id = Column(Integer, ForeignKey("exercise_types.id"))
     subject_id = Column(Integer, ForeignKey("subject.id"))
-    level_id = Column(Integer, ForeignKey("level_category.id"))
+    level_id = Column(Integer, ForeignKey("subject_level.id"))
     title = Column(String)
     desc = Column(String)
     img = Column(String)
@@ -19,6 +22,7 @@ class ExerciseTypes(db.Model):
     __tablename__ = "exercise_types"
     id = Column(Integer, primary_key=True)
     name = Column(String)
+    lesson = relationship("Lesson", backref="exercise_types", order_by="Lesson.id")
 
 
 class Exercise(db.Model):
@@ -27,6 +31,8 @@ class Exercise(db.Model):
     desc = Column(String)
     lesson_id = Column(Integer, ForeignKey('lesson.id'))
     type_id = Column(Integer, ForeignKey('exercise_types.id'))
+    subject_id = Column(Integer, ForeignKey("subject.id"))
+    level_id = Column(Integer, ForeignKey("subject_level.id"))
 
 
 class ExerciseAnswers(db.Model):
@@ -36,5 +42,6 @@ class ExerciseAnswers(db.Model):
     type_id = Column(Integer, ForeignKey('exercise_types.id'))
     exercise_id = Column(Integer, ForeignKey('exercise.id'))
     subject_id = Column(Integer, ForeignKey('subject.id'))
+    level_id = Column(Integer, ForeignKey("subject_level.id"))
     desc = Column(String)
     answer = Column(Boolean, default=False)
