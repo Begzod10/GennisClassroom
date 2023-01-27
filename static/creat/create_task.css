@@ -1,0 +1,73 @@
+body {
+    background-color: rgba(255, 235, 55, 1);
+}
+
+.menu {
+    width: 1400px;
+    height: 50px;
+    border-radius: 10px;
+    background-image: linear-gradient(to left, #0061ff, #60efff);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #0f536a;
+    font-size: 30px;
+}
+
+.subject {
+    width: 400px;
+    height: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+}
+
+input {
+    width: 335px;
+    height: 40px;
+}
+
+.kottasi {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 70px;
+}
+
+.subject_input {
+    margin-top: 30px;
+}
+
+.subject_input_mini {
+    display: flex;
+    flex-direction: column;
+}
+
+.subjects_button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+}
+
+button {
+    width: 140px;
+    height: 40px;
+    background-color: rgba(255, 235, 55, 1);
+    border: none;
+    color: rgba(147, 147, 147, 1);
+}
+
+.select {
+    width: 335px;
+    height: 40px;
+}
+
+.option {
+    text-align: center;
+}

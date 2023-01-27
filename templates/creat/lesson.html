@@ -5,7 +5,12 @@
     <title>Title</title>
 </head>
 <body>
-<form action="{{ url_for("lesson") }}" method="post" enctype="multipart/form-data">
+<form action="{{ url_for("lesson", level_id=level_id.id) }}" method="post" enctype="multipart/form-data">
+    <select name="type" id="">
+        {% for type in types %}
+            <option value="{{ type.id }}">{{ type.name }}</option>
+        {% endfor %}
+    </select>
     <input type="text" name="title">
     <input type="text" name="desc">
     <input type="file" name="img">
