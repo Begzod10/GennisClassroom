@@ -2,9 +2,14 @@ from app import *
 import json
 from backend.basics.settings import *
 from werkzeug.security import *
+from gingerit.gingerit import GingerIt
+from english_words import get_english_words_set
+import enchant
 
+parser = GingerIt()
 
-# Create your views here.
+web2lowerset = get_english_words_set(['web2'], lower=True)
+d = enchant.Dict("en_US")
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -49,6 +54,16 @@ def login():
             else:
                 return redirect(url_for('login'))
     write_json(data=to_json)
+    original_text = "my nam Begzod"
+    # text = original_text.split(' ')
+    # converted_text = ''
+    # for tx in text:
+    #     checking = d.check(tx)
+    #     if checking == False:
+    #         converted_text = original_text.replace(tx, "something")
+
+    print(parser.parse(original_text))
+
     return render_template('login.html')
 
 

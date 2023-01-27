@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../../static/css/writingInside/writingInside.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+          integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+</head>
+<body>
+
+
+<div class="home">
+    <nav>
+        <div>
+
+        </div>
+        <div>
+
+        </div>
+        <div>
+            <div class="info">Anvar</div>
+            <div class="info">Anvarov</div>
+            <img src="../../../static/img/user.png" alt="">
+        </div>
+    </nav>
+    <main>
+        <div class="writingInside">
+            <div class="writingInside__container">
+
+                <div class="title">
+                    Original
+                </div>
+                <div class="desc">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda commodi culpa explicabo harum
+                    illum ipsum iure magnam maxime minima, officiis optio quam quod tempore temporibus ut. Ab est harum
+                    vero?
+                </div>
+            </div>
+            <div class="writingInside__container">
+                <div class="title">
+                    Student Check
+                </div>
+                <div class="desc">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci amet asperiores culpa cumque ea
+                    est et excepturi incidunt iste labore laborum, molestias nisi nobis odit reprehenderit suscipit vel
+                    vitae voluptate.
+                </div>
+            </div>
+
+            <div class="modal">
+                <div class="modal__content">
+                    <form action="">
+
+                        <textarea></textarea>
+
+                        <label for="">
+                            <span>Hato turi</span>
+                            <select name="" id="">
+                                {% for error in error_types %}
+                                    <option value="{{ error.id }}">{{ error.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                        <label for="">
+                            <span>Tog'ri javob</span>
+                            <input type="text">
+                        </label>
+                        <label for="">
+                            <span>Ma'lumot</span>
+                            <input type="text">
+                        </label>
+
+                        <div class="input-submit">
+                            <input type="submit" value="Yubormoq">
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="../../../static/js/insideWriting.js"></script>
+
+</body>
+</html>

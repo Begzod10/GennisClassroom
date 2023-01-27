@@ -40,23 +40,50 @@ class ExerciseAnswers(db.Model):
     answer = Column(Boolean, default=False)
 
 
+class EssayTypes(db.Model):
+    __tablename__ = "essay_types"
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    img = Column(String)
+
+
+class EssayInfo(db.Model):
+    __tablename__ = "essay_info"
+    id = Column(Integer, primary_key=True)
+    desc = Column(Text)
+    type_id = Column(Integer, ForeignKey('essay_types.id'))
+    img = Column(String)
+
+
 class Essay(db.Model):
     __tablename__ = "essay"
     id = Column(Integer, primary_key=True)
     essay_text = Column(Text)
     student_id = Column(Integer, ForeignKey('student.id'))
     teacher_id = Column(Integer, ForeignKey('teacher.id'))
+    info_id = Column(Integer, ForeignKey('essay_info.id'))
+    status = Column(Boolean)
+
+    def add(self):
+        db.session.add(self)
+        db.session.commit()
+
+
+class EssayErrorType(db.Model):
+    __tablename__ = "essay_error_type"
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
 
 
 class EssayError(db.Model):
     __tablename__ = "essay_error"
     id = Column(Integer, primary_key=True)
-    type = Column(String)
     comment = Column(String)
     error = Column(String)
     teacher_id = Column(Integer, ForeignKey('teacher.id'))
     essay_id = Column(Integer, ForeignKey('essay.id'))
     answer = Column(String)
+    error_type = Column(Integer, ForeignKey('essay_error_type.id'))
 
 
 class EssayPeerResult(db.Model):
