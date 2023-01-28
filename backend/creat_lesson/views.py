@@ -173,22 +173,22 @@ def filter_list(level_id):
     return render_template("creat/filter_list.html", lessons=lessons)
 
 
-@app.route("/creat_task", methods=["GET", "POST"])
-def creat_task():
-    if request.method == "POST":
-        # name = request.form.get("name")
-        # add = Task(name=name)
-        # db.session.add(add)
-        # db.session.commit()
-    return render_template("creat/create_task.html")
+# @app.route("/creat_task", methods=["GET", "POST"])
+# def creat_task():
+#     if request.method == "POST":
+#         # name = request.form.get("name")
+#         # add = Task(name=name)
+#         # db.session.add(add)
+#         # db.session.commit()
+#     return render_template("creat/create_task.html")
 
 
-@app.route("/creat_essay", methods=["GET", "POST"])
-def creat_essay():
-    if request.method == "POST":
-        # name = request.form.get("name")
-        # task_id = request.form.get("name")
-        # add = Essay(name=name, task_id=task_id)
-        # db.session.add(add)
-        # db.session.commit()
-    return render_template("creat/esse_type (2).html")
+# @app.route("/creat_essay", methods=["GET", "POST"])
+# def creat_essay():
+#     if request.method == "POST":
+#         # name = request.form.get("name")
+#         # task_id = request.form.get("name")
+#         # add = Essay(name=name, task_id=task_id)
+#         # db.session.add(add)
+#         # db.session.commit()
+#     return render_template("creat/esse_type (2).html")

@@ -1,10 +1,14 @@
 from app import *
 from backend.basics.settings import *
 from backend.models.basic_model import *
+from pprint import pprint
+from dnevnikru import Dnevnik
 
 
 @app.route('/view_subjects')
 def view_subjects():
+    # dairy = Dnevnik("asadbeknimatilloyev", "asadbek2021!")
+    # birthdays = dairy.birthdays(day=9, month=5)
     user = get_current_user()
     return render_template('subjects/subjects.html')
 
