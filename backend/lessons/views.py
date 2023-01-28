@@ -2,7 +2,7 @@ from app import *
 from backend.basics.settings import *
 from backend.models.basic_model import *
 from pprint import pprint
-from dnevnikru import Dnevnik
+# from dnevnikru import Dnevnik
 
 
 @app.route('/view_subjects')

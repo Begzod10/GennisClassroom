@@ -1,10 +1,56 @@
 from app import *
 from backend.models.basic_model import *
 from backend.basics.settings import *
+import requests
 
 
 @app.route('/write_essay/', methods=['GET', 'POST'])
 def write_essay():
+    # google translate
+    # url = "https://google-translate1.p.rapidapi.com/language/translate/v2"
+    #
+    # payload = "q=bye&target=uz&source=en"
+    # headers = {
+    #     "content-type": "application/x-www-form-urlencoded",
+    #     "Accept-Encoding": "application/gzip",
+    #     "X-RapidAPI-Key": "1973d60fb8mshece0ce163f66024p1f4d12jsn70ad27675fdf",
+    #     "X-RapidAPI-Host": "google-translate1.p.rapidapi.com"
+    # }
+    #
+    # response = requests.request("POST", url, data=payload, headers=headers)
+
+    # speech to text
+    # url = "https://speech-to-text13.p.rapidapi.com/transcript"
+
+    # payload = "audio_url=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fb%2Fbb%2FAmerican%2527s_Choice_and_Opportunity_%2528Newton_D._Baker%2529.ogg"
+    # headers = {
+    #     "content-type": "application/x-www-form-urlencoded",
+    #     "X-RapidAPI-Key": "1973d60fb8mshece0ce163f66024p1f4d12jsn70ad27675fdf",
+    #     "X-RapidAPI-Host": "speech-to-text13.p.rapidapi.com"
+    # }
+    #
+    # response = requests.request("POST", url, data=payload, headers=headers)
+
+    # plagarism
+    # url = "https://plagiarism-checker-and-auto-citation-generator-multi-lingual.p.rapidapi.com/plagiarism"
+    #
+    # payload = {
+    #     "text": "This is a test with a minimum of 40 characters to check plagiarism for.",
+    #     "language": "en",
+    #     "includeCitations": False,
+    #     "scrapeSources": False
+    # }
+    # headers = {
+    #     "content-type": "application/json",
+    #     "X-RapidAPI-Key": "1973d60fb8mshece0ce163f66024p1f4d12jsn70ad27675fdf",
+    #     "X-RapidAPI-Host": "plagiarism-checker-and-auto-citation-generator-multi-lingual.p.rapidapi.com"
+    # }
+    #
+    # response = requests.request("POST", url, json=payload, headers=headers)
+
+    # print(response.text)
+
+
     user = get_current_user()
     student = Student.query.filter(Student.user_id == user).first()
     if request.method == "POST":
