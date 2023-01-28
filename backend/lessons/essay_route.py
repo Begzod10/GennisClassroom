@@ -27,3 +27,23 @@ def check_essay(essay_id):
     error_types = EssayErrorType.query.order_by(EssayErrorType.id).all()
     return render_template('writing/insideWriting/insideWriting.html', error_types=error_types)
 
+
+@app.route("/creat_task", methods=["GET", "POST"])
+def creat_task():
+    if request.method == "POST":
+    # name = request.form.get("name")
+    # add = Task(name=name)
+    # db.session.add(add)
+    # db.session.commit()
+    return render_template("creat/create_task.html")
+
+
+@app.route("/creat_essay", methods=["GET", "POST"])
+def creat_essay():
+    if request.method == "POST":
+    # name = request.form.get("name")
+    # task_id = request.form.get("name")
+    # add = Essay(name=name, task_id=task_id)
+    # db.session.add(add)
+    # db.session.commit()
+    return render_template("creat/esse_type (2).html")
