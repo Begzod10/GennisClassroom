@@ -1,28 +1,12 @@
-
-let subjects = [
-    {
-        id: 1,
-        title:"Ingliz tili",
-        img:"/img/english.jpg"
-    },
-    {
-        id: 2,
-        title: "Matematika",
-        img:"/img/math.jpg"
-    },
-    {
-        id: 3,
-        title: "Fizika",
-        img:"/img/Fizika.jpg"
-    },
-    {
-        id: 4,
-        title: "Tarix",
-        img:"/img/History.jpg"
-    }
-]
-
-
+let subjects = [{
+    id: 1, title: "Ingliz tili", img: "/img/english.jpg"
+}, {
+    id: 2, title: "Matematika", img: "/img/math.jpg"
+}, {
+    id: 3, title: "Fizika", img: "/img/Fizika.jpg"
+}, {
+    id: 4, title: "Tarix", img: "/img/History.jpg"
+}]
 
 
 const renderSubjects = (subjects) => {
@@ -46,18 +30,17 @@ const renderSubjects = (subjects) => {
     }
 
 
-
     const elems = document.querySelectorAll(".courses__item-container__item")
 
 
-    elems.forEach((item,index) => {
-        item.addEventListener("click",() => {
-            subjects = subjects.map((subject,i) => {
+    elems.forEach((item, index) => {
+        item.addEventListener("click", () => {
+            subjects = subjects.map((subject, i) => {
                 if (i === index) {
                     if (subject.checked) {
-                        return {...subject,checked: false}
+                        return {...subject, checked: false}
                     }
-                    return {...subject,checked: true}
+                    return {...subject, checked: true}
                 }
                 return subject
             })
@@ -93,17 +76,17 @@ const renderSelectedSubjects = (subjects) => {
     const elems = document.querySelectorAll(".courses__selected-item")
 
 
-    elems.forEach((item,index) => {
-        item.addEventListener("click",() => {
+    elems.forEach((item, index) => {
+        item.addEventListener("click", () => {
 
             const itemId = item.getAttribute("data-id")
 
             subjects = subjects.map((subject) => {
                 if (subject.id === +itemId) {
                     if (subject.checked) {
-                        return {...subject,checked: false}
+                        return {...subject, checked: false}
                     }
-                    return {...subject,checked: true}
+                    return {...subject, checked: true}
                 }
                 return subject
             })
@@ -129,8 +112,7 @@ async function postData(url = '', data = {}) {
         headers: {
             'Content-Type': 'application/json'
             // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        redirect: 'follow', // manual, *follow, error
+        }, redirect: 'follow', // manual, *follow, error
         referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
         body: JSON.stringify(data) // body data type must match "Content-Type" header
     });
@@ -138,30 +120,33 @@ async function postData(url = '', data = {}) {
 }
 
 
-
 const submit = document.querySelector(".submit")
 
-submit.addEventListener("click",() => {
+submit.addEventListener("click", () => {
 
-    postData('https://example.com/answer', subjects);
+    fetch("/get_subjects/", {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        body: JSON.stringify({
+            "subjects": subjects
+        }), headers: {
+            'Content-Type': 'application/json'
+        },
+    })
 })
 
 
-
-
-
-fetch("", {
+fetch("/get_subjects/", {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
-    mode: 'cors', // no-cors, *cors, same-origin
-    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: 'same-origin', // include, *same-origin, omit
+
     headers: {
         'Content-Type': 'application/json'
     },
-    redirect: 'follow',
-    referrerPolicy: 'no-referrer'
 })
     .then(res => res.json())
-    .then(res => console.log(res))
+    .then(res => {
+        subjects = res.subjects
+        renderSelectedSubjects(subjects)
+        renderSubjects(subjects)
+    })
 
 

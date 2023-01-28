@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="/style/writingList/writingList.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../../../static/css/writingList/writingList.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+          integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <body>
-
 
 
 <div class="home">
@@ -21,7 +22,7 @@
         <div>
             <div class="info">Anvar</div>
             <div class="info">Anvarov</div>
-            <img src="/img/user.png" alt="">
+            <img src="../../../static/img/user.png" alt="">
         </div>
     </nav>
     <main>
@@ -34,81 +35,32 @@
                 </div>
             </div>
             <div class="writingList-content">
-                <a class="writingList-content__item">
-                    <div class="header">
-                        <span>Elementary</span>
-                        <span>Task 1</span>
-                    </div>
+                {% for essay in essays %}
+                    <a class="writingList-content__item" href="{{ url_for('check_essay',essay_id=essay.id) }}">
+                        <div class="header">
+                            <span>Elementary</span>
+                            <span>{{ essay.essay_info.essay_type.name }}</span>
+                        </div>
 
-                    <div class="main">
-                        <h1 class="title">
-                            Hello world
-                        </h1>
-                        <p class="desc">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                            Adipisci aspernatur beatae corporis cum deleniti, dolorem ducimus eaque eum ex fuga laborum
-                            laudantium libero magni necessitatibus nesciunt quo quod sint sunt!
-                        </p>
-                    </div>
-                </a>
-                <a class="writingList-content__item">
-                    <div class="header">
-                        <span>Elementary</span>
-                        <span>Task 1</span>
-                    </div>
+                        <div class="main">
+                            <h1 class="title">
+                                Hello world
+                            </h1>
+                            <p class="desc">
 
-                    <div class="main">
-                        <h1 class="title">
-                            Hello world
-                        </h1>
-                        <p class="desc">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                            Adipisci aspernatur beatae corporis cum deleniti, dolorem ducimus eaque eum ex fuga laborum
-                            laudantium libero magni necessitatibus nesciunt quo quod sint sunt!
-                        </p>
-                    </div>
-                </a>
-                <a class="writingList-content__item">
-                    <div class="header">
-                        <span>Elementary</span>
-                        <span>Task 1</span>
-                    </div>
+                                    <p>{{ essay.essay_text }}</p>
 
-                    <div class="main">
-                        <h1 class="title">
-                            Hello world
-                        </h1>
-                        <p class="desc">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                            Adipisci aspernatur beatae corporis cum deleniti, dolorem ducimus eaque eum ex fuga laborum
-                            laudantium libero magni necessitatibus nesciunt quo quod sint sunt!
-                        </p>
-                    </div>
-                </a>
-                <a class="writingList-content__item">
-                    <div class="header">
-                        <span>Elementary</span>
-                        <span>Task 1</span>
-                    </div>
-
-                    <div class="main">
-                        <h1 class="title">
-                            Hello world
-                        </h1>
-                        <p class="desc">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                            Adipisci aspernatur beatae corporis cum deleniti, dolorem ducimus eaque eum ex fuga laborum
-                            laudantium libero magni necessitatibus nesciunt quo quod sint sunt!
-                        </p>
-                    </div>
-                </a>
+                            </p>
+                        </div>
+                    </a>
+                {% endfor %}
             </div>
         </div>
     </main>
 </div>
 
 
-<script src="/js/subject.js"></script>
+<script src="../../../static/js/subject.js"></script>
 
 
 </body>
