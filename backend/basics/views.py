@@ -3,13 +3,15 @@ import json
 from backend.basics.settings import *
 from werkzeug.security import *
 from gingerit.gingerit import GingerIt
-from english_words import get_english_words_set
-import enchant
 
-parser = GingerIt()
 
-web2lowerset = get_english_words_set(['web2'], lower=True)
-d = enchant.Dict("en_US")
+# from english_words import get_english_words_set
+# import enchant
+
+# parser = GingerIt()
+#
+# web2lowerset = get_english_words_set(['web2'], lower=True)
+# d = enchant.Dict("en_US")
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -62,7 +64,7 @@ def login():
     #     if checking == False:
     #         converted_text = original_text.replace(tx, "something")
 
-    print(parser.parse(original_text))
+    # print(parser.parse(original_text))
 
     return render_template('login.html')
 
