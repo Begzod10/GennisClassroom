@@ -6,6 +6,27 @@
   padding: 30px
   display: flex
   justify-content: center
+  align-content: flex-start
+  flex-wrap: wrap
+  .msg
+    width: 100%
+    height: fit-content
+    display: flex
+    align-items: center
+    justify-content: center
+    margin-bottom: 50px
+    a
+      display: inline
+      text-decoration: underline
+      color: blue
+    h1
+      font-weight: 400
+      font-size: 20px
+      text-align: center
+    .success
+      color: #04bb04
+    .error
+      color: #e50000
   &__container
     width: 45%
     margin: 0 10px
@@ -25,6 +46,7 @@
           &>div
             visibility: visible
             opacity: 1
+
         &> div
           position: absolute
           top: 100%

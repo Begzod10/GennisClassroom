@@ -2,6 +2,8 @@ from app import *
 from backend.basics.settings import *
 from backend.models.basic_model import *
 from pprint import pprint
+
+
 # from dnevnikru import Dnevnik
 
 
@@ -33,12 +35,14 @@ def get_subjects():
 def receive_subjects():
     user = get_current_user()
     subjects = request.get_json()['subjects']
+
     student = Student.query.filter(Student.user_id == user.id).first()
     for sub in subjects:
-        subject = Subject.query.filter(Subject.id == sub['id']).first()
-        if subject not in student.subjects:
-            student.subjects.append(subject)
-            db.session.commit()
+        if 'checked' in sub:
+            subject = Subject.query.filter(Subject.id == sub['id']).first()
+            if subject not in student.subjects:
+                student.subjects.append(subject)
+                db.session.commit()
     return redirect(url_for('my_subjects'))
 
 
@@ -46,7 +50,16 @@ def receive_subjects():
 def my_subjects():
     user = get_current_user()
     student = Student.query.filter(Student.user_id == user.id).first()
-    return render_template('mySubjects/mySubjects.html', student=student)
+    subject_list = []
+    for subject in student.subjects:
+        info = {
+            "id": subject.id,
+            "name": subject.name,
+            "img": subject.img
+        }
+        subject_list.append(info)
+
+    return render_template('mySubjects/mySubjects.html', student=student, subject_list=subject_list)
 
 
 @app.route('/my_lesson/<int:sub_id>')

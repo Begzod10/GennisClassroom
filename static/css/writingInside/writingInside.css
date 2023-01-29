@@ -46,6 +46,32 @@ a {
   padding: 30px;
   display: flex;
   justify-content: center;
+  align-content: flex-start;
+  flex-wrap: wrap;
+}
+.writingInside .msg {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+.writingInside .msg a {
+  display: inline;
+  text-decoration: underline;
+  color: blue;
+}
+.writingInside .msg h1 {
+  font-weight: 400;
+  font-size: 20px;
+  text-align: center;
+}
+.writingInside .msg .success {
+  color: #04bb04;
+}
+.writingInside .msg .error {
+  color: #e50000;
 }
 .writingInside__container {
   width: 45%;

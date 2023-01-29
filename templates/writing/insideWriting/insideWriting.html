@@ -20,13 +20,21 @@
 
         </div>
         <div>
-            <div class="info">Anvar</div>
-            <div class="info">Anvarov</div>
+            <div class="info">Mahmud</div>
+            <div class="info">Yo`Ldoshev</div>
             <img src="../../../static/img/user.png" alt="">
         </div>
     </nav>
     <main>
         <div class="writingInside">
+            {% if essay.plagiarism_link %}
+                <div class="msg">
+                    <h1 class="error">
+                        Plagarism Error !!!<a href="{{ essay.plagiarism_link }}"
+                                              target="_blank">{{ essay.plagiarism_link }}</a> .
+                    </h1>
+                </div>
+            {% endif %}
             <div class="writingInside__container">
 
                 <div class="title">

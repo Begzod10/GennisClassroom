@@ -19,14 +19,14 @@
 
         </div>
         <div>
-            <div class="info">Anvar</div>
-            <div class="info">Anvarov</div>
+            <div class="info">Begzod</div>
+            <div class="info">Jumaniyozov</div>
             <img src='../../static/img/user.png' alt="">
         </div>
     </nav>
     <main>
         <div class="mySubjects">
-            {% for sub in student.subjects %}
+            {% for sub in subject_list %}
             <div class="mySubjects__item">
                 <a href="{{ url_for('my_lesson', sub_id=sub.id) }}">
                     <div class="mySubjects__item-img">

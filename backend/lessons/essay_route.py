@@ -32,27 +32,9 @@ def write_essay():
     # response = requests.request("POST", url, data=payload, headers=headers)
 
     # plagarism
-    # url = "https://plagiarism-checker-and-auto-citation-generator-multi-lingual.p.rapidapi.com/plagiarism"
-    #
-    # payload = {
-    #     "text": "This is a test with a minimum of 40 characters to check plagiarism for.",
-    #     "language": "en",
-    #     "includeCitations": False,
-    #     "scrapeSources": False
-    # }
-    # headers = {
-    #     "content-type": "application/json",
-    #     "X-RapidAPI-Key": "1973d60fb8mshece0ce163f66024p1f4d12jsn70ad27675fdf",
-    #     "X-RapidAPI-Host": "plagiarism-checker-and-auto-citation-generator-multi-lingual.p.rapidapi.com"
-    # }
-    #
-    # response = requests.request("POST", url, json=payload, headers=headers)
-
-    # print(response.text)
-
 
     user = get_current_user()
-    student = Student.query.filter(Student.user_id == user).first()
+    student = Student.query.filter(Student.user_id == user.id).first()
     if request.method == "POST":
         essay = request.form.get('essay')
         add = Essay(essay_text=essay, student_id=student.id, info_id=1)
@@ -69,14 +51,30 @@ def essays_list():
 
 @app.route('/check_essay/<int:essay_id>', methods=['POST', 'GET'])
 def check_essay(essay_id):
-    # essay = Essay.query.filter(Essay.id == essay_id).first()
-    # essay_errors = EssayError.query.order_by(EssayError.id).all()
-    # error_top = "xato topmadi"
-    #
-    # for error in essay_errors:
-    #     if error.error in essay.essay_text:
-    #         error_top = "xato topdi"
+    url = "https://plagiarism-checker-and-auto-citation-generator-multi-lingual.p.rapidapi.com/plagiarism"
     essay = Essay.query.filter(Essay.id == essay_id).first()
+    # payload = {
+    #     "text": essay.essay_text,
+    #     "language": "en",
+    #     "includeCitations": False,
+    #     "scrapeSources": False
+    # }
+    # headers = {
+    #     "content-type": "application/json",
+    #     "X-RapidAPI-Key": "1973d60fb8mshece0ce163f66024p1f4d12jsn70ad27675fdf",
+    #     "X-RapidAPI-Host": "plagiarism-checker-and-auto-citation-generator-multi-lingual.p.rapidapi.com"
+    # }
+    #
+    # response = requests.request("POST", url, json=payload, headers=headers)
+    #
+    # print(response.text)
+    # if response:
+    #     for source in response.json()['sources']:
+    #         Essay.query.filter(Essay.id == essay_id).update({
+    #             "plagiarism_link": source['url']
+    #         })
+    #         db.session.commit()
+
     error_types = EssayErrorType.query.order_by(EssayErrorType.id).all()
     essay_errors = EssayError.query.order_by(EssayError.id).all()
 
@@ -125,7 +123,6 @@ def send_errors(essay_id):
     add.add()
     return jsonify({'success': True})
 
-
 # @app.route("/creat_task", methods=["GET", "POST"])
 # def creat_task():
 #     if request.method == "POST":
@@ -145,4 +142,3 @@ def send_errors(essay_id):
 #     # db.session.add(add)
 #     # db.session.commit()
 #     return render_template("creat/esse_type (2).html")
-
