@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!--TODO:
+         * Add line numbers for reading section
+         * Make line number getter
+    -->
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SAT QOTD</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#87cefa"/>
+    
+    <link rel="stylesheet" href="main.css">
+
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css"  media="screen,projection"/>
+
+    <style>
+        h1 {
+            font-size: 1.2rem;
+        }
+        </style>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-180251239-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-180251239-1');
+</script>
+
+</head>
+
+<body>
+    <div id="app">
+        <div class="row">
+
+            <div class="col s12 m6 offset-m3">
+                <div class="card-panel small teal lighten-2">
+                    <span class="card-title">INFORMATION</span>
+                    <p>Date: {{ questionDate }}</p>
+                    <p>Section: {{ section }}{{ sub_section }}</p>
+                    <p>Question Difficulty: {{ difficulty }}</p>
+                    <p v-html="instructions"></p>
+                </div>
+            </div>
+
+            <div class="col s12 m6 offset-m3">
+                <div class="card white-grey darken-1 sticky-action">
+                    <div class="card-content black-text">
+                        <span class="card-title activator" @click="showHintText()">QUESTION</span>
+                        <div class="FullQuestion" v-html="question"></div>
+                        <div id="choiceList" class="card-action" style="padding-bottom: 0px;">
+                            <ol type="A" class="collection">
+                                <li style="background-color: transparent;" v-for="choice in choices">
+                                    <p class="choice" v-html="choice.body" style="width: 85%"></p>
+                                    <button class="btn-small waves-effect selectButton" @click="select($event, choice)">Select</button>
+                                </li>
+                            </ol>
+                            <div id="SubmitButton">
+                                    <button class="btn submitButton"  v-if="this.userAnswer!='' && !this.submitted" @click="submit()">Submit</button>
+                                    <button class="btn submitButton disabled" v-else>Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="showHint">
+                        <button class="btn hintButton activator" @click="showHintText()" v-if="!this.showHintActive">Show hint</button>
+                        <button class="btn hintButton activator" @click="showHintText()" v-else>Hide hint</button>
+                    </div>
+                    <div class="card-reveal">
+                            <span class="card-title" @click="showHintText()">Hint<i class="material-icons right">close</i></span>
+                            <p v-html="hint"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p align="center">Made with ❤️ by <a href="https://github.com/amin-codes">Amin</a></p>
+    </div>
+</body>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+    <script>
+        //URL for json: https://data-sat-origin.collegeboard.org/api/v1/views/qotd.json
+        // Chrome 1+
+        var isChrome = !!window.chrome && !!window.chrome.webstore;
+
+        var gLines = []
+        function pixelToCharacter(ele)
+        {
+            return parseFloat(window.getComputedStyle(ele).getPropertyValue("max-width").replace("px","")) / 8.0;
+        }
+        function questiontoLines(theDOM)
+        {
+            var lines = [];
+            var paragraphs = theDOM.getElementsByClassName("FullQuestion")[0].children;
+            var tracker = 0;
+            for (var i = 1; i < paragraphs.length; i++) //Skip attributes
+            {
+                var paragraph = paragraphs[i];
+
+                if (paragraph.outerHTML.includes("<p class=\"firstLine\">") || paragraph.outerHTML.includes("<p class=\"everyLine\">"))
+                {
+                    var eachTag = paragraph.outerHTML.substring(paragraph.outerHTML.indexOf("\">")+2).split("</a>");
+                    for (var j = 0; j < eachTag.length; j++)
+                    {
+                        var lineID = eachTag[j].substring(eachTag[j].indexOf("<a id=\"")+"<a id=\"".length);
+                        lineID = lineID.substring(lineID.indexOf("\""),lineID.indexOf("\\\""));
+
+                        if (!(lineID===""))
+                        {
+                            var lineContentStart = -1;
+                            var lineContentEnd = -1;
+                            if (lineID.includes("start"))
+                            {
+                                var paragraphPixelSize = pixelToCharacter(paragraph);
+                                var startIndex = paragraph.textContent.indexOf(eachTag[j+1].substring(0,eachTag[j+1].indexOf("<"))) / paragraphPixelSize;
+                                var endIndex = eachTag[j+1].substring(0,eachTag[j+1].indexOf("<")).indexOf(".") / paragraphPixelSize;
+                                console.log("TAG: " + lineID);
+                                console.log("P SIZE: "+paragraphPixelSize);
+                                console.log("        "+startIndex);
+                                lineContentStart = Math.floor(startIndex);
+                                lineContentEnd = Math.floor(endIndex) + lineContentStart;
+                                console.log("        "+lineContentEnd);
+
+                                lines[lineID] = tracker + lineContentStart + 1;
+                                lines[lineID.replace("start", "end")] = tracker + lineContentEnd + 1;
+                            }
+                        }
+                    }
+                    tracker += Math.floor(paragraph.textContent.length/pixelToCharacter(paragraph));
+                }
+            }
+            return lines;
+        }
+        function replaceQuestionLines(question)
+        {
+            var q = question;
+            while (true)
+            {
+                var exists = q.indexOf("{line:");
+                var p = q.substring(exists+6);
+                if ((exists > -1) && p.includes("}"))
+                {
+                    var tag = p.substring(0, p.indexOf("}"));
+                    q = q.replace("{line:"+tag+"}", gLines[tag]);
+                }
+                else{
+                    break;
+                }
+            }
+            return q;
+        }
+
+        function getParentUntil(starting, html)
+        {
+            if (starting.href.startsWith(html)) return starting;
+            return getParentUntil(starting.parentElement, hml);
+        }
+        function isAuto(event)
+        {
+            return event.attributes[0] === undefined || event.attributes[0].nodeValue==="background-color: transparent;";
+        }
+        function changeColor(event, color)
+        {
+            var isAutoColor = isAuto(event);
+            if (isAutoColor)
+            {
+                event.style.backgroundColor = color;
+            }
+            else
+            event.attributes[0].nodeValue = "background-color: transparent;";
+        }
+        function forceChangeColor(event, color)
+        {
+            event.style.backgroundColor = color;
+        }
+        const app = new Vue({
+            el: '#app',
+            data: {
+                questionDate: "",
+                question: "",
+                difficulty: "",
+                correctAnswer: "",
+                hint: "",
+                choices: [],
+                instructions: "Instructions: ",
+                section: "",
+                sub_section: "",
+                userAnswer: "",
+                showHintActive: false,
+                submitted: false,
+                attribution: "",
+                prompt: "",
+                globalLines: []
+            },
+            methods:
+            {
+                select: function(event, userA)
+                {
+                    var answer = userA;
+                    var target = event.target;
+                    for (var i = 0; i < event.target.parentElement.parentElement.children.length; i++)
+                    {
+                        if (!isAuto(event.target.parentElement.parentElement.children[i]))
+                            changeColor(event.target.parentElement.parentElement.children[i], "yellow");
+                    }
+                    changeColor(target.parentElement, "yellow");
+                    this.userAnswer = answer;
+                },
+                showHintText: function()
+                {
+                    this.showHintActive = !this.showHintActive;
+                },
+                submit : function()
+                {
+                    this.submitted = true;
+                    var elements = document.getElementById('choiceList').children[0].children;
+                    var alphabet = "abcde";
+                    correctChoiceIndex = alphabet.indexOf(this.correctAnswer);
+                    for (var i = 0; i <elements.length; i++)
+                    {
+                        if (correctChoiceIndex==i)
+                            forceChangeColor(elements[i], "green");
+                        else{
+                            if (this.choices[alphabet[i]]===this.userAnswer)
+                                forceChangeColor(elements[i], "red")
+                        }
+                        elements[i].innerHTML += "<p>Rationale: " + this.choices[alphabet[i]].rationale.replace("<p>","").replace("</p>","") + "</p>";
+                        
+                    }
+                }
+            }
+            ,
+            created() {
+                //fetch("./question.json")
+                fetch( ("https://data-sat-origin.collegeboard.org/api/v1/views/qotd.json") )
+                    .then(response => response.json())
+                    .then(json => {
+                        this.questionDate = json[0].date;
+                        this.section = json[0].section;
+                        if (this.section==="Math")
+                        {
+                            this.question = json[0].prompt;
+                            this.sub_section = json[0].sub_section;
+                        }
+                        else
+                        {
+                            this.question = json[0].passage.body;
+                            this.sub_section = json[0].skill;
+                        }
+                        this.difficulty = json[0].difficulty;
+                        this.correctAnswer = json[0].answer.correct_choice;
+                        this.hint = json[0].answer.hint.replace("<p>","").replace("</p>","");
+                        this.choices = json[0].answer.choices; //choice[0][0]=Abody, choice[0][1] = Arationale
+                        this.instructions += json[0].instructions[0].replace("<p>", "").replace("</p>", "")+"\n";
+                        
+                        if (this.section==="Reading")
+                        {
+                            this.attribution = json[0].passage.attribution;
+                            this.prompt = json[0].prompt;
+                            var q = "<!DOCTYPE html><html><head></head><body><div class=\"FullQuestion\">" + 
+                                this.attribution.replace("<p>", "<p class=\"attribution\">") + 
+                                this.question.replace(/<p>/, "<br><p class=\"firstLine\">&ensp;" ).replace(/<p>/g, "</p>" +"<p class=\"everyLine\">" + "&emsp;").replace(/<\/p>/g, "</p>").replace("<p class=\"everyLine\">&emsp;Adapted from", "\n<p>Adapted from") + "</p><br>" + 
+                                this.prompt + 
+                                "</div></body></html>";
+                            var doc = document.createElement( 'html' );
+                            doc.innerHTML = q;
+                            this.globalLines = questiontoLines(doc);
+                            gLines = this.globalLines;
+                            var newPrompt = this.attribution.replace("<p>", "<p class=\"attribution\">") + this.question.replace(/<p>/, "<br><p class=\"firstLine\">&ensp;" ).replace(/<p>/g, "</p>" +"<p class=\"everyLine\">" + "&emsp;").replace(/<\/p>/g, "</p>").replace("<p class=\"everyLine\">&emsp;Adapted from", "\n<p>Adapted from") + "</p><br>" + replaceQuestionLines(this.prompt);
+                            this.question = newPrompt;
+                        }
+                        if (!(this.sub_section === "") && !(this.sub_section===undefined))
+                        {
+                            this.sub_section = " (" + this.sub_section + ")";
+                        }
+                    })
+            }
+        })
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+</body>
+
+</html>

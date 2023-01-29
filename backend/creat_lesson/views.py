@@ -1,9 +1,18 @@
+import requests
+
 from app import *
 from backend.basics.models import *
 from backend.lessons.models import *
 from werkzeug.utils import secure_filename
 from backend.basics.settings import *
 
+headers = {
+    'Content-type': 'application/json'
+
+}
+
+
+# Copyleaks.set_identity_uri("88e15773-2877-4e58-965e-71625684c962")
 
 def subject_folder():
     upload_folder = 'static/img/subject_img'
@@ -23,6 +32,11 @@ def checkFile(filename):
 
 @app.route("/subject", methods=["GET", "POST"])
 def subject():
+    myobj = json.dumps({'email': 'rimefara22@gmail.com', 'key': '88e15773-2877-4e58-965e-71625684c962'})
+
+    response = requests.post('https://id.copyleaks.com/v3/account/login/api', headers=headers, data=myobj)
+
+    print(response)
     if request.method == "POST":
         subject = request.form.get("subject")
         photo = request.files['file']
@@ -172,3 +186,22 @@ def filter_list(level_id):
     lessons = Lesson.query.filter(Lesson.level_id == level_id).order_by(Lesson.id)
     return render_template("creat/filter_list.html", lessons=lessons)
 
+# @app.route("/creat_task", methods=["GET", "POST"])
+# def creat_task():
+#     if request.method == "POST":
+#         # name = request.form.get("name")
+#         # add = Task(name=name)
+#         # db.session.add(add)
+#         # db.session.commit()
+#     return render_template("creat/create_task.html")
+
+
+# @app.route("/creat_essay", methods=["GET", "POST"])
+# def creat_essay():
+#     if request.method == "POST":
+#         # name = request.form.get("name")
+#         # task_id = request.form.get("name")
+#         # add = Essay(name=name, task_id=task_id)
+#         # db.session.add(add)
+#         # db.session.commit()
+#     return render_template("creat/esse_type (2).html")

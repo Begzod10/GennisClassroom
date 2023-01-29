@@ -31,7 +31,7 @@ def login():
                 return redirect(url_for('login'))
         else:
             exist = False
-            with open("api_kundalik.json") as r:
+            with open("apis/api_kundalik.json") as r:
                 data = json.load(r)
                 for school in data['schools']:
                     for student in school['students']:

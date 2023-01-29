@@ -1,0 +1,49 @@
+{
+    "schools": [
+        {
+            "school_num": 52,
+            "students": [
+                {
+                    "age": 21,
+                    "attendance": 90,
+                    "card_id": "asd21wedsd",
+                    "id": 1,
+                    "name": "Begzod",
+                    "password": "12345678",
+                    "score": 90,
+                    "surname": "Jumaniyozov"
+                },
+                {
+                    "age": 19,
+                    "attendance": 80,
+                    "card_id": "fdsfseqe221e",
+                    "id": 2,
+                    "name": "Ulug'bek",
+                    "password": "12345678",
+                    "score": 90,
+                    "surname": "Fatxullayev"
+                },
+                {
+                    "age": 19,
+                    "attendance": 80,
+                    "card_id": "sadad231sdqw",
+                    "id": 3,
+                    "name": "Asliddin",
+                    "password": "12345678",
+                    "score": 80,
+                    "surname": "Mirmuhsinov"
+                },
+                {
+                    "age": 27,
+                    "attendance": 50,
+                    "card_id": "qwds21w12ssd",
+                    "id": 4,
+                    "name": "Mehroj",
+                    "password": "12345678",
+                    "score": 50,
+                    "surname": "Ibodov"
+                }
+            ]
+        }
+    ]
+}

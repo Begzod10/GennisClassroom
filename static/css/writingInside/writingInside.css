@@ -61,6 +61,65 @@ a {
   padding: 20px;
   border: 2px solid black;
 }
+.writingInside__container .desc .checked {
+  display: inline-block;
+  text-decoration: underline;
+  position: relative;
+}
+.writingInside__container .desc .checked:hover > div {
+  visibility: visible;
+  opacity: 1;
+}
+.writingInside__container .desc .checked > div {
+  position: absolute;
+  top: 100%;
+  min-width: 300px;
+  min-height: 100px;
+  box-shadow: 0 0 15px 1px #868686;
+  opacity: 0;
+  visibility: hidden;
+  background-color: white;
+  border-radius: 15px;
+  padding: 10px;
+  transition: all 0.6s;
+  display: flex;
+  flex-direction: column;
+}
+.writingInside__container .desc .checked > div .mistake {
+  margin-bottom: 20px;
+  color: #e50000;
+}
+.writingInside__container .desc .checked > div .answer {
+  color: #04bb04;
+}
+.writingInside__container .desc .checked > div .comment {
+  margin-top: 20px;
+}
+.writingInside__container .desc .checked > div .btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+.writingInside__container .desc .checked > div .btns__item {
+  padding: 7px 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #737373;
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+}
+.writingInside__container .desc .checked > div .btns__item:active {
+  transform: scale(0.9);
+}
+.writingInside__container .desc .checked > div .btns__item:hover {
+  background-color: #737373;
+  color: white;
+}
 .writingInside .modal {
   width: 100%;
   height: 100vh;
@@ -123,21 +182,23 @@ a {
 .writingInside .modal__content label input {
   padding: 10px;
 }
-.writingInside .modal__content .input-submit {
+.writingInside .modal__content .submit-container {
   margin-top: 25px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.writingInside .modal__content .input-submit input {
+.writingInside .modal__content .submit-container input {
   padding: 15px 30px;
   border: 1px solid black;
   background-color: white;
+  cursor: pointer;
 }
-.writingInside .modal__content .input-submit input:hover {
-  background-color: #EBC853;
-  border: 1px solid black;
+.writingInside .modal__content .submit-container input:hover {
+  background-color: #9a9a9a;
+  border: 1px solid #9a9a9a;
+  color: white;
 }
 
 /*# sourceMappingURL=writingInside.css.map */

@@ -33,7 +33,7 @@ def check_essay(essay_id):
     essay = Essay.query.filter(Essay.id == essay_id).first()
     error_types = EssayErrorType.query.order_by(EssayErrorType.id).all()
     essay_errors = EssayError.query.order_by(EssayError.id).all()
-    error_list = []
+
     for error in essay_errors:
         if error.error in essay.essay_text:
             archive = EssayErrorArchive.query.filter(EssayErrorArchive.error_id == error.id,
@@ -41,38 +41,40 @@ def check_essay(essay_id):
             if not archive:
                 add = EssayErrorArchive(error_id=error.id, essay_id=essay_id)
                 add.add()
+
+    return render_template('writing/insideWriting/insideWriting.html', error_types=error_types, essay=essay,
+                           essay_id=essay_id)
+
+
+@app.route('/get_essay_errors/<int:essay_id>')
+def get_essay_errors(essay_id):
+    error_list = []
     archive_errors = EssayErrorArchive.query.filter(EssayErrorArchive.essay_id == essay_id).all()
     for error in archive_errors:
         info = {
-            "error": error.essay_error.error,
+            "id": error.id,
+            "mistake": error.essay_error.error,
             "error_type": error.essay_error.error_type.name,
             "answer": error.essay_error.answer,
             "comment": error.essay_error.comment
         }
         error_list.append(info)
+    return jsonify({
+        "error_list": error_list
+    })
 
 
-    return render_template('writing/insideWriting/insideWriting.html', error_types=error_types, essay=essay,
-                           error_list=error_list)
+@app.route('/send_errors/<int:essay_id>', methods=['POST'])
+def send_errors(essay_id):
+    mistake = request.get_json()['mistake']['mistake']
+    answer = request.get_json()['mistake']['answer']
+    comment = request.get_json()['mistake']['comment']
+    error_type = request.get_json()['mistake']['mistake_type']
 
-
-# @app.route("/creat_task", methods=["GET", "POST"])
-# def creat_task():
-#     if request.method == "POST":
-#     # name = request.form.get("name")
-#     # add = Task(name=name)
-#     # db.session.add(add)
-#     # db.session.commit()
-#     return render_template("creat/create_task.html")
-#
-#
-# @app.route("/creat_essay", methods=["GET", "POST"])
-# def creat_essay():
-#     if request.method == "POST":
-#     # name = request.form.get("name")
-#     # task_id = request.form.get("name")
-#     # add = Essay(name=name, task_id=task_id)
-#     # db.session.add(add)
-#     # db.session.commit()
-#     return render_template("creat/esse_type (2).html")
-
+    error_add = EssayError(error=mistake, essay_id=essay_id, answer=answer,
+                           comment=comment, error_type_id=error_type)
+    db.session.add(error_add)
+    db.session.commit()
+    add = EssayErrorArchive(error_id=error_add.id, essay_id=essay_id)
+    add.add()
+    return jsonify({'success': True})
