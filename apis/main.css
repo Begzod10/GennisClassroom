@@ -1,0 +1,90 @@
+body{
+    background-color: lightskyblue;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+p{
+    font-family: Georgia, 'Times New Roman', Times, serif
+}
+.choice{
+    margin:0;
+    display: inline-block;
+}
+.selectButton{
+    float: right;
+    margin-left: 100%;
+    position: relative;
+    bottom: 31px;
+    padding-bottom: 34px;
+}
+li{
+    background-color: transparent;
+    margin-top: 30px;
+    padding-bottom: 2px;
+}
+.submitButton{
+    float: right;
+    margin: -15px -70px;
+    position: absolute;
+    left: 45%;
+}
+.hintButton{
+    float: right;
+    position: relative;
+    margin-top: -6%;
+    margin-right: 41%;
+    left: 8%;
+    right: -10%;
+}
+.hintText{
+    display:block;
+    word-wrap: break-word;
+}
+.question-marker {
+    background-color: yellow;
+    background-size: auto;
+}
+
+pre{
+    counter-reset: line;
+}
+code{
+    counter-increment: line;
+    max-width:30px;
+    word-wrap: break-word;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+caption::before{
+    content: "\A";
+    white-space: pre;
+}
+p.firstLine::before{
+    content: "Line" !important;
+    font-style: italic !important;
+}
+p.firstLine{
+    counter-increment: line;
+    word-wrap: break-word !important;
+    max-width: 37ch !important;
+    font-family: 'Times New Roman', Times, serif;
+}
+p.everyLine{
+    counter-increment: line;
+    word-wrap: break-word !important;
+    max-width: 37ch !important;
+    font-family: 'Times New Roman', Times, serif;
+}
+p.everyLine::before{
+    content: counter(line);
+    -webkit-user-select: none;
+    font-style: italic;
+}
+
+p.attribution{
+    /*Add later*/    
+}
+
+main{
+    flex: 1 0 auto;
+}

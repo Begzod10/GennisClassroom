@@ -20,13 +20,21 @@
 
         </div>
         <div>
-            <div class="info">Anvar</div>
-            <div class="info">Anvarov</div>
+            <div class="info">Mahmud</div>
+            <div class="info">Yo`Ldoshev</div>
             <img src="../../../static/img/user.png" alt="">
         </div>
     </nav>
     <main>
         <div class="writingInside">
+            {% if essay.plagiarism_link %}
+                <div class="msg">
+                    <h1 class="error">
+                        Plagarism Error !!!<a href="{{ essay.plagiarism_link }}"
+                                              target="_blank">{{ essay.plagiarism_link }}</a> .
+                    </h1>
+                </div>
+            {% endif %}
             <div class="writingInside__container">
 
                 <div class="title">
@@ -51,25 +59,25 @@
 
                         <textarea></textarea>
 
-                        <label for="">
+                        <label for="select-type">
                             <span>Hato turi</span>
-                            <select name="" id="">
+                            <select name="" id="select-type">
                                 {% for error in error_types %}
                                     <option value="{{ error.id }}">{{ error.name }}</option>
                                 {% endfor %}
                             </select>
                         </label>
-                        <label for="">
+                        <label for="input-answer">
                             <span>Tog'ri javob</span>
-                            <input type="text">
+                            <input id="input-answer" type="text">
                         </label>
-                        <label for="">
+                        <label for="input-comment">
                             <span>Ma'lumot</span>
-                            <input type="text">
+                            <input id="input-comment" type="text">
                         </label>
 
-                        <div class="input-submit">
-                            <input type="submit" value="Yubormoq">
+                        <div class="submit-container">
+                            <input id="input-submit" type="submit" data-essayId="{{ essay_id }}" value="Yubormoq">
                         </div>
                     </form>
 

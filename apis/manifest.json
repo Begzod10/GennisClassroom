@@ -1,0 +1,8 @@
+{
+    "short_name": "SAT QOTD",
+    "name":"SAT Question Of The Day",
+    "start_url": "/index.html",
+    "background_color": "#87cefa",
+    "theme_color": "#87cefa",
+    "display":"standalone"
+}

@@ -46,6 +46,7 @@ const renderSubjects = (subjects) => {
             })
             renderSubjects(subjects)
             renderSelectedSubjects(subjects)
+            sendSubjects(subjects)
         })
     })
 
@@ -93,6 +94,7 @@ const renderSelectedSubjects = (subjects) => {
 
             renderSubjects(subjects)
             renderSelectedSubjects(subjects)
+            sendSubjects(subjects)
         })
     })
 
@@ -100,6 +102,7 @@ const renderSelectedSubjects = (subjects) => {
 
 renderSubjects(subjects)
 renderSelectedSubjects(subjects)
+sendSubjects(subjects)
 
 
 async function postData(url = '', data = {}) {
@@ -120,19 +123,22 @@ async function postData(url = '', data = {}) {
 }
 
 
-const submit = document.querySelector(".submit")
-
-submit.addEventListener("click", () => {
-
-    fetch("/get_subjects/", {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        body: JSON.stringify({
-            "subjects": subjects
-        }), headers: {
-            'Content-Type': 'application/json'
-        },
+function sendSubjects(subjects) {
+    const submit = document.querySelector(".submit")
+    submit.addEventListener("click", () => {
+        console.log(subjects)
+        fetch("/receive_subjects/", {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            body: JSON.stringify({
+                "subjects": subjects
+            }), headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+        window.location.href = 'http://127.0.0.1:5000/my_subjects/'
+        window.location.reload(true)
     })
-})
+}
 
 
 fetch("/get_subjects/", {
@@ -147,6 +153,7 @@ fetch("/get_subjects/", {
         subjects = res.subjects
         renderSelectedSubjects(subjects)
         renderSubjects(subjects)
+        sendSubjects(subjects)
     })
 
 

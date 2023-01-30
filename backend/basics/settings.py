@@ -28,7 +28,9 @@ to_json = {
                     "attendance": 90,
                     "score": 90,
                     "card_id": "asd21wedsd",
-                    "password": "12345678"
+                    "password": "12345678",
+                    "username": "begzodjumaniyozov211"
+
                 },
                 {
                     "id": 2,
@@ -38,7 +40,8 @@ to_json = {
                     "attendance": 80,
                     "score": 90,
                     "card_id": "fdsfseqe221e",
-                    "password": "12345678"
+                    "password": "12345678",
+                    "username": "ulug'bekfatxullayev212",
                 },
                 {
                     "id": 3,
@@ -48,7 +51,8 @@ to_json = {
                     "attendance": 80,
                     "score": 80,
                     "card_id": "sadad231sdqw",
-                    "password": "12345678"
+                    "password": "12345678",
+                    "username": "ulug'bekfatxullayev213"
                 },
                 {
                     "id": 4,
@@ -58,7 +62,8 @@ to_json = {
                     "attendance": 50,
                     "score": 50,
                     "card_id": "qwds21w12ssd",
-                    "password": "12345678"
+                    "password": "12345678",
+                    "username": "ulug'bekfatxullayev214"
                 }
             ]
         }

@@ -73,6 +73,7 @@ class Essay(db.Model):
     info_id = Column(Integer, ForeignKey('essay_info.id'))
     status = Column(Boolean)
     archive = relationship("EssayErrorArchive", backref="essay", lazy='select', order_by="EssayErrorArchive.id")
+    plagiarism_link = Column(String)
 
     def add(self):
         db.session.add(self)
