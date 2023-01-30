@@ -61,7 +61,7 @@ def login():
     #     checking = d.check(tx)
     #     if checking == False:
     #         converted_text = original_text.replace(tx, "something")
-
+    #
     # print(parser.parse(original_text))
 
     return render_template('login.html')
