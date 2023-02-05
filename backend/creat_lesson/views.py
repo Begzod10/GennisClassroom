@@ -24,6 +24,11 @@ def lesson_folder():
     return upload_folder
 
 
+def question_folder():
+    upload_folder = 'static/img/question'
+    return upload_folder
+
+
 def checkFile(filename):
     value = '.' in filename
     type_file = filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -186,6 +191,7 @@ def filter_list(level_id):
     lessons = Lesson.query.filter(Lesson.level_id == level_id).order_by(Lesson.id)
     return render_template("creat/filter_list.html", lessons=lessons)
 
+
 # @app.route("/creat_task", methods=["GET", "POST"])
 # def creat_task():
 #     if request.method == "POST":
@@ -205,3 +211,20 @@ def filter_list(level_id):
 #         # db.session.add(add)
 #         # db.session.commit()
 #     return render_template("creat/esse_type (2).html")
+
+@app.route('/student_question', methods=["GET", "POST"])
+def student_question():
+    if request.method == "POST":
+        question = request.form.get("question")
+        photo = request.files['file']
+        folder = question_folder()
+        if photo and checkFile(photo.filename):
+            photo_file = secure_filename(photo.filename)
+            photo_url = "/" + folder + "/" + photo_file
+            app.config['UPLOAD_FOLDER'] = folder
+            photo.save(os.path.join(app.config['UPLOAD_FOLDER'], photo_file))
+            add = StudentQuestion(question=question, img=photo_url)
+            db.session.add(add)
+            db.session.commit()
+        return redirect(url_for('student_question'))
+    return render_template("question_answer/student_question.html")

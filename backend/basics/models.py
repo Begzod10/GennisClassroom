@@ -10,6 +10,9 @@ class Subject(db.Model):
     answer = relationship('ExerciseAnswers', backref="subject", order_by="ExerciseAnswers.id")
     lesson = relationship('Lesson', backref="subject", order_by="Lesson.id")
     exercise = relationship('Exercise', backref="subject", order_by="Exercise.id")
+    student_question = relationship("StudentQuestion", lazy="select", order_by="StudentQuestion.id")
+    question_answers = relationship("QuestionAnswers", lazy="select", order_by="QuestionAnswers.id")
+    answer_comment = relationship("AnswerComment", lazy="select", order_by="AnswerComment.id")
 
 
 class LevelCategory(db.Model):
