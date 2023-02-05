@@ -16,64 +16,187 @@ from gingerit.gingerit import GingerIt
 
 @app.route('/', methods=['POST', 'GET'])
 def login():
+    users = [
+        {
+            "id": 1,
+            "name": "Shahzod",
+            "surname": "Sobirov",
+            "username": "Sob1rov",
+            "father_name": "Sherzod",
+            "teacher_id": 1,
+            "password": 12345,
+            "group": [
+                {
+                    "id": 1,
+                    "group_name": "A1",
+                    "group_subject": "English"
+                }
+            ],
+            "photo_profile": "",
+        },
+        {
+            "id": 2,
+            "name": "Aybek",
+            "surname": "Abdusamatov",
+            "username": "Aybek",
+            "father_name": "Baxtjan",
+            "teacher_id": 2,
+            "password": 12345,
+            "group": [
+                {
+                    "id": 1,
+                    "group_name": "A1",
+                    "group_subject": "English"
+                },
+                {
+                    "id": 2,
+                    "group_name": "oqtoplam",
+                    "group_subject": "Matematika"
+                },
+                {
+                    "id": 3,
+                    "group_name": "biologiya",
+                    "group_subject": "biologiya"
+                }
+            ],
+            "photo_profile": "",
+        },
+        {
+            "id": 3,
+            "name": "Begzod",
+            "surname": "Jumaniyozov",
+            "username": "rimefara",
+            "father_name": "Jumaniyoz",
+            "teacher_id": 3,
+            "password": 12345,
+            "group": [
+                {
+                    "id": 3,
+                    "group_name": "B1",
+                    "group_subject": "English"
+                }
+            ],
+            "photo_profile": "",
+        },
+        {
+            "id": 4,
+            "name": "Asad",
+            "surname": "Nimatilloyev",
+            "username": "Asad",
+            "father_name": "Nimat",
+            "teacher_id": 3,
+            "password": 12345,
+            "group": [
+                {
+                    "id": 1,
+                    "group_name": "Tarix",
+                    "group_subject": "Tarix"
+                }
+            ],
+            "photo_profile": "",
+        },
+        {
+            "id": 5,
+            "name": "Shoxjaxon",
+            "surname": "Xudoyberganov",
+            "username": "Shox",
+            "father_name": "Xudoyberg",
+            "teacher_id": 5,
+            "password": 12345,
+            "group": [
+                {
+                    "id": 1,
+                    "group_name": "Tarix",
+                    "group_subject": "Tarix"
+                }
+            ],
+            "photo_profile": "",
+        },
+        {
+            "id": 6,
+            "name": "Ulugbek",
+            "surname": "Fatxullayev",
+            "username": "Monster",
+            "father_name": "Fatxulla",
+            "teacher_id": 6,
+            "password": 12345,
+            "group": [
+                {
+                    "id": 1,
+                    "group_name": "Tarix",
+                    "group_subject": "Tarix"
+                }
+            ],
+            "photo_profile": "",
+        },
+        {
+            "id": 7,
+            "name": "Asliddin",
+            "surname": "Mirmuhsinov",
+            "username": "Asi",
+            "father_name": "Mirmuhsin",
+            "teacher_id": 6,
+            "password": 12345,
+            "group": [
+                {
+                    "id": 1,
+                    "group_name": "Tarix",
+                    "group_subject": "Tarix"
+                }
+            ],
+            "photo_profile": "",
+        }
+    ]
     if request.method == "POST":
-
         username = request.form.get('username')
         password = request.form.get('password')
-        user = User.query.filter(User.username == username).first()
-        if user:
-            if user and check_password_hash(user.password, password):
-                session['username'] = user.username
-                student = Student.query.filter(Student.user_id == user.id).first()
-                teacher = Teacher.query.filter(Teacher.user_id == user.id).first()
-                if student:
-                    if student.subjects:
-                        return redirect(url_for('my_subjects'))
-                    else:
-                        return redirect(url_for('view_subjects'))
-                if teacher:
-                    return redirect(url_for('essays_list'))
-            else:
-                return redirect(url_for('login'))
-        else:
-            exist = False
-            with open("apis/api_kundalik.json") as r:
-                data = json.load(r)
-                for school in data['schools']:
-                    for student in school['students']:
-                        if student['username'] == username and student['password'] == password:
-                            exist = True
-                            rate = round((student['attendance'] * 0.7) + (student['score'] * 0.3)) / 100
-                            password = generate_password_hash(student['password'], method='sha256')
-                            add = User(username=student['username'], name=student['name'], surname=student['surname'],
-                                       password=password)
-                            add.add()
-
-                            category = LevelCategory.query.filter(
-                                and_(LevelCategory.ot <= rate, LevelCategory.do >= rate)).first()
-
-                            student = Student(user_id=add.id, level_category=category.id)
-                            student.add()
-                            session['username'] = add.username
-            if exist:
-                return redirect(url_for('view_subjects'))
-            else:
-                return redirect(url_for('login'))
-    write_json(data=to_json)
-
-    original_text = "my nam Begzod"
-    # text = original_text.split(' ')
-    # converted_text = ''
-    # for tx in text:
-    #     checking = d.check(tx)
-    #     if checking == False:
-    #         converted_text = original_text.replace(tx, "something")
-    #
-    # print(parser.parse(original_text))
+        # user = User.query.filter(User.username == username).first()
+        for user in users:
+            id = user["id"]
+            nik = user["username"]
+            name = user["name"]
+            platform_password = str(user["password"])
+            surname = user["surname"]
+            hashed = generate_password_hash(password=platform_password, method="sha256")
+            if username == nik:
+                print("ishladi")
+                platform_user = User.query.filter(User.platform_id == id).first()
+                if platform_user:
+                    print("bu oquvchi bor")
+                else:
+                    add = User(name=name, surname=surname, username=nik, password=hashed, platform_id=id)
+                    db.session.add(add)
+                    db.session.commit()
+        # if user:
+        #     if user and check_password_hash(user.password, password):
+        #         session['username'] = user.username
+        #         student = Student.query.filter(Student.user_id == user.id).first()
+        #         teacher = Teacher.query.filter(Teacher.user_id == user.id).first()
+        #         if student:
+        #             if student.subjects:
+        #                 return redirect(url_for('my_subjects'))
+        #             else:
+        #                 return redirect(url_for('view_subjects'))
+        #         if teacher:
+        #             return redirect(url_for('essays_list'))
+        #     else:
+        #         return redirect(url_for('login'))
 
     return render_template('login.html')
 
 
-def write_json(data, filename='apis/api_kundalik.json'):
-    with open(filename, "w") as f:
-        json.dump(data, f, indent=4)
+@app.route('/register', methods=['POST', 'GET'])
+def register():
+    if request.method == "POST":
+        username = request.form.get("username")
+        name = request.form.get("name")
+        surname = request.form.get("surname")
+        password = request.form.get("password")
+        hashed = generate_password_hash(password=password, method="sha256")
+        add = User(name=name, username=username, surname=surname, password=hashed)
+        db.session.add(add)
+        db.session.commit()
+        student = Student(user_id=add.id)
+        db.session.add(student)
+        db.session.commit()
+    return render_template('register.html')

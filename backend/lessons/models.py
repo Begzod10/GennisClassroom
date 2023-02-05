@@ -16,6 +16,9 @@ class Lesson(db.Model):
     desc = Column(String)
     img = Column(String)
     video = Column(String)
+    exercise = relationship("Exercise", backref="lesson", order_by="Exercise.id")
+    answers = relationship("ExerciseAnswers", backref="lesson", order_by="ExerciseAnswers.id")
+    donelesson = relationship("DoneLesson", backref="lesson", order_by="DoneLesson.id")
 
 
 class ExerciseTypes(db.Model):
@@ -23,6 +26,7 @@ class ExerciseTypes(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     lesson = relationship("Lesson", backref="exercise_types", order_by="Lesson.id")
+    donelessons = relationship("DoneLesson", backref="exercise_types", order_by="DoneLesson.id")
 
 
 class Exercise(db.Model):
@@ -33,6 +37,8 @@ class Exercise(db.Model):
     type_id = Column(Integer, ForeignKey('exercise_types.id'))
     subject_id = Column(Integer, ForeignKey("subject.id"))
     level_id = Column(Integer, ForeignKey("subject_level.id"))
+    exercise_variants = relationship("ExerciseAnswers", backref="exercise", order_by="ExerciseAnswers.id")
+    donelessons = relationship("DoneLesson", backref="exercise", order_by="DoneLesson.id")
 
 
 class ExerciseAnswers(db.Model):
@@ -45,6 +51,7 @@ class ExerciseAnswers(db.Model):
     level_id = Column(Integer, ForeignKey("subject_level.id"))
     desc = Column(String)
     answer = Column(Boolean, default=False)
+    donelessons = relationship("DoneLesson", backref="exercise_answers", order_by="DoneLesson.id")
 
 
 class EssayTypes(db.Model):
@@ -124,3 +131,4 @@ class EssayStudentChecks(db.Model):
     def add(self):
         db.session.add(self)
         db.session.commit()
+
