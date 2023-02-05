@@ -30,9 +30,13 @@
         <div class="subject">
             <div class="subject-nav">
                 <div class="subject-nav__header">
-                    <div>Ingliz tili</div>
+
+                    <div>{{ subject.name }}</div>
                     <div>0%</div>
                 </div>
+                {% for lev in level %}
+                    <a href="{{ url_for("my_lesson_level", level_id=lev.id) }}">{{ lev.name }}</a>
+                {% endfor %}
                 <div class="subject-nav__container">
                     <div class="subject-nav__content">
                         <div class="subject-nav__content-title active">
@@ -45,110 +49,62 @@
                         </div>
 
                         <ol class="subject-nav__content-container  ">
-                            <li class="subject-nav__content-item">
-                                <a href="">
-                                <span>
-                                     Ingliz tili haqida
-                                </span>
-                                    <span>
-                                    0%
-                                </span>
+                            {% for les in lesson_list %}
+                                <a href="{{ url_for("lesson_info", lesson_id=les.id) }}">
+                                    <li class="subject-nav__content-item">
+                                        {#                                    <a href="{{ url_for("my_lesson", lesson_id=lesson.id) }}">#}
+
+                                        <span>
+                                              {{ les.title }}
+                                        </span>
+                                        <span>
+                                            0%
+                                        </span>
+
+                                        {#                                    </a>#}
+                                    </li>
                                 </a>
-                            </li>
-                            <li class="subject-nav__content-item">
-                                <a href="">
-                                <span>
-                                     IELTS haqida
-                                </span>
-                                    <span>
-                                    0%
-                                </span>
-                                </a>
-                            </li>
+                            {% endfor %}
 
                         </ol>
                     </div>
                 </div>
-
             </div>
             <div class="subject-content">
+
                 <video controls src="">
                     <source src=""
                             type="video/mp4">
                 </video>
-                <div class="title">Ingliz tili haqida</div>
+                <div class="title">{{ info.title }}</div>
                 <div class="desc">
-                    <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda at culpa cum esse facere
-                        harum id quae quia ratione vero. Aliquam, cumque doloribus fuga itaque maxime molestiae neque
-                        odit tempore?
-                    </div>
-                    <div>Odio, recusandae, unde? Ad aut consectetur doloribus explicabo illum, iure laborum odit
-                        recusandae sed similique. Dolores doloribus ex in officiis perferendis saepe? Accusantium
-                        architecto, cum et id ipsam iusto voluptatem.
-                    </div>
-                    <div>Ad adipisci aliquid aspernatur corporis cupiditate delectus dignissimos dolore ducimus eaque
-                        eligendi et fuga ipsa laborum magni maxime molestias nam nesciunt quae quis repudiandae, sed
-                        sequi soluta, tempore ut voluptate?
-                    </div>
-                    <div>A accusantium alias aut, culpa deserunt dicta dolores eius excepturi facere incidunt iste magni
-                        nam obcaecati optio placeat possimus provident qui repudiandae saepe sint sit tempora temporibus
-                        totam vitae voluptatem!
-                    </div>
-                    <div>Ab delectus doloremque est fuga ipsa modi, nemo, nisi nobis obcaecati porro, quasi qui suscipit
-                        tempora ullam voluptates? Ad aliquam, eligendi eos excepturi laudantium molestias nostrum
-                        numquam perspiciatis quia veniam!
-                    </div>
-                    <div>Aut dolores ea eos eum excepturi impedit laboriosam nihil non odio officiis placeat quas quasi
-                        reprehenderit, sequi voluptates? Amet consequatur eum impedit laudantium modi nobis odit sed
-                        tempore tenetur unde.
-                    </div>
-                    <div>Beatae, debitis explicabo fuga iure iusto maiores maxime quam tempore unde? Commodi consectetur
-                        consequuntur iure omnis sint voluptatum. Consequatur officia quos repellat repudiandae
-                        voluptates! Deserunt eius excepturi fugit quia similique?
-                    </div>
-                    <div>Alias assumenda at deleniti dicta, dolor error est eum eveniet fuga fugiat in inventore, iusto
-                        quaerat quod soluta. Animi illum laudantium libero officiis porro. Blanditiis doloribus eaque
-                        fugit minus numquam!
-                    </div>
-                    <div>Alias deserunt, expedita mollitia natus nobis odit officia omnis perferendis quas quasi quo,
-                        recusandae sit totam ullam voluptas! Amet fuga hic illo mollitia necessitatibus praesentium
-                        quam, recusandae sequi vel vero?
-                    </div>
-                    <div>Amet aspernatur cupiditate dolor enim et eum exercitationem harum molestias nam, non, quam quod
-                        sapiente, veniam veritatis voluptas voluptatem voluptatibus. Ab adipisci at aut ducimus illum
-                        ipsa necessitatibus, neque quas.
-                    </div>
+                    <div>{{ info.desc }}</div>
                 </div>
 
-
                 <div class="exam">
-                    <h1 class="exam-title">Topshiriqlar.</h1>
+                    <form action="{{ url_for("lesson_info", lesson_id=info.id) }}" method="post">
+                        <h1 class="exam-title">Topshiriqlar.</h1>
+                        {% for question in info.exercises %}
+                            <h1>1. {{ question.desc }}</h1>
+                            {% for ans in question.exercises_variants %}
+                                <label for="input1">
+                                    <span>{{ loop.index }}</span>
+                                    <input class="var" data-id="{{ ans.id }}" type="radio" name="test" id="input1">
+                                    <span>{{ ans.desc }}</span>
+                                </label>
 
-                    <form action="">
-                        <h1>1. Qaysi javob tog'ri ?</h1>
-                        <label for="input1">
-                            <span>A</span>
-                            <input type="radio" name="test" id="input1">
-                            <span>Hamma javob tog'ri</span>
-                        </label>
-                        <label for="input2">
-                            <span>B</span>
-                            <input type="radio" name="test" id="input2">
-                            <span>Hamma javob tog'ri</span>
-                        </label>
-                        <label for="input3">
-                            <span>C</span>
-                            <input type="radio" name="test" id="input3">
-                            <span>Hamma javob tog'ri</span>
-                        </label>
-                        <label for="input4">
-                            <span>D</span>
-                            <input type="radio" name="test" id="input4">
-                            <span>Hamma javob tog'ri</span>
-                        </label>
-                        <div class="input-submit">
-                            <input type="submit" value="Tekshirmoq">
-                        </div>
+                            {% endfor %}
+
+                            <div class="input-submit">
+                                <input class="inp" type="text" name="id" hidden>
+                                {% if question.finished %}
+                                    <input disabled type="submit" value="Tekshirmoq">
+                                {% else %}
+                                    <input type="submit" value="Tekshirmoq">
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+
 
                     </form>
                 </div>

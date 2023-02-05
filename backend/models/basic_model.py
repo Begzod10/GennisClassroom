@@ -34,8 +34,8 @@ class User(db.Model):
     image = Column(String)
     balance = Column(Integer)
     password = Column(String)
+    platform_id = Column(Integer)
     student = relationship('Student', backref='user', order_by="Student.id", lazy="dynamic")
-
     def add(self):
         db.session.add(self)
         db.session.commit()
@@ -47,6 +47,7 @@ class Student(db.Model):
     user_id = Column(Integer, ForeignKey('user.id'))
     level_category = Column(Integer, ForeignKey('level_category.id'))
     subjects = relationship("Subject", secondary="student_subject", lazy="select", order_by="Subject.id")
+    donelesson = relationship("DoneLesson", backref="student", order_by="DoneLesson.id")
 
     def add(self):
         db.session.add(self)

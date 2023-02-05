@@ -1,5 +1,6 @@
 from flask import *
 from backend.models.basic_model import *
+from backend.done_lesson.models import *
 
 app = Flask(__name__)
 app.config.from_object('backend.models.config')
