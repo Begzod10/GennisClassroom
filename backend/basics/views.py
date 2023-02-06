@@ -167,20 +167,21 @@ def login():
                     add = User(name=name, surname=surname, username=nik, password=hashed, platform_id=id)
                     db.session.add(add)
                     db.session.commit()
-        # if user:
-        #     if user and check_password_hash(user.password, password):
-        #         session['username'] = user.username
-        #         student = Student.query.filter(Student.user_id == user.id).first()
-        #         teacher = Teacher.query.filter(Teacher.user_id == user.id).first()
-        #         if student:
-        #             if student.subjects:
-        #                 return redirect(url_for('my_subjects'))
-        #             else:
-        #                 return redirect(url_for('view_subjects'))
-        #         if teacher:
-        #             return redirect(url_for('essays_list'))
-        #     else:
-        #         return redirect(url_for('login'))
+                    student = Student(user_id=add.id)
+                    db.session.commit()
+                    for gr in user['group']:
+                        exist_group = Group.query.filter(Group.platform_id == gr['id']).first()
+                        if not exist_group:
+                            group_add = Group(platform_id=gr['id'], name=gr['group_name'])
+                            db.session.add(group_add)
+                            db.session.commit()
+                            if group_add not in student.groups:
+                                student.groups.append(group_add)
+                                db.session.commit()
+                        else:
+                            if exist_group not in student.groups:
+                                student.groups.append(exist_group)
+                                db.session.commit()
 
     return render_template('login.html')
 

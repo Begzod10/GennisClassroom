@@ -36,6 +36,7 @@ class User(db.Model):
     password = Column(String)
     platform_id = Column(Integer)
     student = relationship('Student', backref='user', order_by="Student.id", lazy="dynamic")
+
     def add(self):
         db.session.add(self)
         db.session.commit()
@@ -46,8 +47,13 @@ class Student(db.Model):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('user.id'))
     level_category = Column(Integer, ForeignKey('level_category.id'))
-    subjects = relationship("Subject", secondary="student_subject", lazy="select", order_by="Subject.id")
+    subjects = relationship("Subject", lazy="select", order_by="Subject.id")
     donelesson = relationship("DoneLesson", backref="student", order_by="DoneLesson.id")
+    groups = relationship("Group", secondary="student_group", backref="student", order_by="Group.id")
+    studentlesson = relationship("StudentLesson", backref="student", order_by="StudentLesson.id")
+    studentcourse = relationship("StudentCourse", backref="student", order_by="StudentCourse.id")
+    studentsubject = relationship("StudentSubject", backref="student", order_by="StudentSubject.id")
+
 
     def add(self):
         db.session.add(self)
@@ -57,10 +63,19 @@ class Student(db.Model):
         db.session.commit(self)
 
 
-db.Table('student_subject',
-         db.Column('student_id', db.Integer, db.ForeignKey('student.id')),
-         db.Column('subject_id', db.Integer, db.ForeignKey('subject.id'))
+class Group(db.Model):
+    __tablename__ = "group"
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    subject_id = Column(Integer, ForeignKey("subject.id"))
+    platform_id = Column(Integer)
+
+
+db.Table('student_group',
+         db.Column('group_id', db.Integer, db.ForeignKey('group.id')),
+         db.Column('student_id', db.Integer, db.ForeignKey('student.id'))
          )
+
 
 db.Table('teacher_subject',
          db.Column('teacher_id', db.Integer, db.ForeignKey('teacher.id')),

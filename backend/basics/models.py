@@ -30,5 +30,8 @@ class SubjectLevel(db.Model):
     lesson = relationship('Lesson', backref="subject_level", order_by="Lesson.id")
     exercise = relationship('Exercise', backref="subject_level", order_by="Exercise.id")
     donelessons = relationship('DoneLesson', backref="subject_level", order_by="DoneLesson.id")
+    studentcourse = relationship('StudentCourse', backref="subject_level", order_by="StudentCourse.id")
+    studentsubject = relationship('StudentSubject', backref="subject_level", order_by="StudentSubject.id")
+
 
 
