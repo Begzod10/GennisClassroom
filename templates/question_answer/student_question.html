@@ -14,9 +14,5 @@
 
 </form>
 
-{% for student in student %}
-    <a href="{{ url_for("student_question", student_id=student.id) }}">{{ student.question }}</a>
-{% endfor %}
-
 </body>
 </html>

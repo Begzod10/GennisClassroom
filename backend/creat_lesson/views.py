@@ -193,24 +193,32 @@ def filter_list(level_id):
     return render_template("creat/filter_list.html", lessons=lessons)
 
 
-@app.route('/student_question/<int:student_id>', methods=["GET", "POST"])
-def student_question(student_id):
-    if request.method == "POST":
-        question = request.form.get("question")
-        photo = request.files['photo']
-        date = datetime.now()
-        folder = question_folder()
-        if photo and checkFile(photo.filename):
-            photo_file = secure_filename(photo.filename)
-            photo_url = "/" + folder + "/" + photo_file
-            app.config['UPLOAD_FOLDER'] = folder
-            photo.save(os.path.join(app.config['UPLOAD_FOLDER'], photo_file))
-            add = StudentQuestion(question=question, img=photo_url, date=date)
-            db.session.add(add)
-            db.session.commit()
-        return redirect(url_for('student_question'))
-    student = StudentQuestion.query.filter(StudentQuestion.student_id == student_id).order_by(StudentQuestion.id)
-    return render_template("question_answer/student_question.html", student=student)
+@app.route('/student_question', methods=["GET", "POST"])
+def student_question():
+    try:
+        user = get_current_user()
+        student = Student.query.filter(Student.user_id == user.id).first()
+
+        if request.method == "POST":
+            question = request.form.get("question")
+            photo = request.files['photo']
+            date = datetime.now()
+            folder = question_folder()
+            if photo and checkFile(photo.filename):
+                photo_file = secure_filename(photo.filename)
+                photo_url = "/" + folder + "/" + photo_file
+                app.config['UPLOAD_FOLDER'] = folder
+                photo.save(os.path.join(app.config['UPLOAD_FOLDER'], photo_file))
+                add = StudentQuestion(question=question, img=photo_url, date=date)
+                db.session.add(add)
+                db.session.commit()
+            return redirect(url_for('student_question'))
+    except AttributeError:
+        return render_template("login.html")
+    student_questions = StudentQuestion.query.filter(StudentQuestion.student_id == student.id).order_by(
+        StudentQuestion.id).all()
+    return render_template("question_answer/student_question.html", student_questions=student_questions,
+                           student=student)
 
 
 @app.route('/question_answer', methods=["GET", "POST"])
