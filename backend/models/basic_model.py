@@ -88,7 +88,7 @@ class StudentQuestion(db.Model):
     student_id = Column(Integer, ForeignKey('student.id'))
     question = Column(String)
     subject_id = Column(Integer, ForeignKey("subject.id"))
-    date = Column(Date)
+    date = Column(DateTime)
     img = Column(Text)
     question_answers = relationship("QuestionAnswers", lazy="select", order_by="QuestionAnswers.id")
 
