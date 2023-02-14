@@ -12,7 +12,17 @@
     <input type="file" name="photo">
     <input type="submit">
 
+    <select name="sub_id" id="">
+        {% for sub in subject %}
+            <option value="{{ sub.id }}">{{ sub.name }}</option>
+        {% endfor %}
+    </select>
+
 </form>
+
+{#{% for question in questions %}#}
+{#    <a href="{{ url_for('question_answer', question_id=question.id) }}">{{ question.question }}</a>#}
+{#{% endfor %}#}
 
 </body>
 </html>

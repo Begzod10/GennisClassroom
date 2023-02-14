@@ -91,6 +91,7 @@ class StudentQuestion(db.Model):
     date = Column(DateTime)
     img = Column(Text)
     question_answers = relationship("QuestionAnswers", lazy="select", order_by="QuestionAnswers.id")
+    answer_comment = relationship("AnswerComment", lazy="select", order_by="AnswerComment.id")
 
 
 class QuestionAnswers(db.Model):
@@ -100,6 +101,7 @@ class QuestionAnswers(db.Model):
     user_id = Column(Integer, ForeignKey('user.id'))
     checked = Column(Boolean)
     date = Column(Date)
+    img = Column(Text)
     subject_id = Column(Integer, ForeignKey("subject.id"))
     question_id = Column(Integer, ForeignKey("student_question.id"))
     answer_comment = relationship("AnswerComment", lazy="select", order_by="AnswerComment.id")
@@ -111,5 +113,6 @@ class AnswerComment(db.Model):
     answer_id = Column(Integer, ForeignKey("question_answers.id"))
     user_id = Column(Integer, ForeignKey('user.id'))
     subject_id = Column(Integer, ForeignKey("subject.id"))
+    question_id = Column(Integer, ForeignKey("student_question.id"))
     comment = Column(Text)
     date = Column(Date)
