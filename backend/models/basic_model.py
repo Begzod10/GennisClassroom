@@ -8,11 +8,6 @@ from sqlalchemy.sql import func, functions
 db = SQLAlchemy()
 
 
-# app.config['SQLALCHEMY_ECO'] = True
-# lazy = "dynamic" -> bu relationship bugan table lani 2 tarafdan , filter, order  qb beradi va misol uchun child table orqali parentni ozgartirsa boladi yoki teskarisi
-# lazy = "select" -> bu relationship bugan table lani aloxida query qb beradi
-# lazy = "joined" -> bu relationship bugan table lani bittada hammasini query qb beradi
-# lazy = "subquery" -> "joined" ga oxshidi test qlib iwltib koriw kere farqi tezligida bolishi mumkin
 def db_setup(app):
     app.config.from_object('backend.models.config')
     db.app = app
@@ -36,6 +31,8 @@ class User(db.Model):
     password = Column(String)
     platform_id = Column(Integer)
     student = relationship('Student', backref='user', order_by="Student.id", lazy="dynamic")
+    question_answers = relationship('QuestionAnswers', backref='user', order_by="QuestionAnswers.id", lazy="dynamic")
+    answer_comment = relationship('AnswerComment', backref='user', order_by="AnswerComment.id", lazy="dynamic")
 
     def add(self):
         db.session.add(self)
@@ -47,13 +44,13 @@ class Student(db.Model):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('user.id'))
     level_category = Column(Integer, ForeignKey('level_category.id'))
-    subjects = relationship("Subject", lazy="select", order_by="Subject.id")
+    # subjects = relationship("SubjectSubject",  backref="student", lazy="select", order_by="Subject.id")
+    student_question = relationship("StudentQuestion", lazy="select", order_by="StudentQuestion.id")
     donelesson = relationship("DoneLesson", backref="student", order_by="DoneLesson.id")
     groups = relationship("Group", secondary="student_group", backref="student", order_by="Group.id")
     studentlesson = relationship("StudentLesson", backref="student", order_by="StudentLesson.id")
     studentcourse = relationship("StudentCourse", backref="student", order_by="StudentCourse.id")
     studentsubject = relationship("StudentSubject", backref="student", order_by="StudentSubject.id")
-
 
     def add(self):
         db.session.add(self)
@@ -76,10 +73,14 @@ db.Table('student_group',
          db.Column('student_id', db.Integer, db.ForeignKey('student.id'))
          )
 
-
 db.Table('teacher_subject',
          db.Column('teacher_id', db.Integer, db.ForeignKey('teacher.id')),
          db.Column('subject_id', db.Integer, db.ForeignKey('subject.id'))
+         )
+
+db.Table('teacher_group',
+         db.Column('teacher_id', db.Integer, db.ForeignKey('teacher.id')),
+         db.Column('group_id', db.Integer, db.ForeignKey('group.id'))
          )
 
 
@@ -87,3 +88,37 @@ class Teacher(db.Model):
     __tablename__ = "teacher"
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('user.id'))
+    groups = relationship("Group", secondary="teacher_group", backref="teacher", order_by="Group.id")
+
+
+class StudentQuestion(db.Model):
+    __tablename__ = "student_question"
+    id = Column(Integer, primary_key=True)
+    student_id = Column(Integer, ForeignKey('student.id'))
+    question = Column(String)
+    subject_id = Column(Integer, ForeignKey("subject.id"))
+    date = Column(DateTime)
+    img = Column(Text)
+    question_answers = relationship("QuestionAnswers", lazy="select", order_by="QuestionAnswers.id")
+
+
+class QuestionAnswers(db.Model):
+    __tablename__ = "question_answers"
+    id = Column(Integer, primary_key=True)
+    answer = Column(Text)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    checked = Column(Boolean)
+    date = Column(Date)
+    subject_id = Column(Integer, ForeignKey("subject.id"))
+    question_id = Column(Integer, ForeignKey("student_question.id"))
+    answer_comment = relationship("AnswerComment", lazy="select", order_by="AnswerComment.id")
+
+
+class AnswerComment(db.Model):
+    __tablename__ = "answer_comment"
+    id = Column(Integer, primary_key=True)
+    answer_id = Column(Integer, ForeignKey("question_answers.id"))
+    user_id = Column(Integer, ForeignKey('user.id'))
+    subject_id = Column(Integer, ForeignKey("subject.id"))
+    comment = Column(Text)
+    date = Column(Date)

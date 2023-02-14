@@ -3,7 +3,7 @@ from backend.lessons.models import *
 from backend.basics.models import *
 
 
-class Donelesson(db.Model):
+class DoneLesson(db.Model):
     __tablename__ = "donelesson"
     id = Column(Integer, primary_key=True)
     student_id = Column(Integer, ForeignKey("student.id"))
@@ -37,7 +37,7 @@ class StudentCourse(db.Model):
 class StudentSubject(db.Model):
     __tablename__ = "studentsubject"
     id = Column(Integer, primary_key=True)
-    course_id = Column(Integer, ForeignKey("subject_level.id"))
+    subject_id = Column(Integer, ForeignKey("subject.id"))
     student_id = Column(Integer, ForeignKey("student.id"))
-    percentage = Column(Integer)
-    finished = Column(Boolean)
+    percentage = Column(Integer, default=0)
+    finished = Column(Boolean, default=False)

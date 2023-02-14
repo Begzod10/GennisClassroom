@@ -11,6 +11,7 @@ from backend.basics.views import *
 from backend.creat_lesson.views import *
 from backend.lessons.views import *
 from backend.lessons.essay_route import *
+from backend.teacher_groups.views import *
 
 if __name__ == '__main__':
     app.run()

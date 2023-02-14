@@ -35,14 +35,15 @@ def get_subjects():
 def receive_subjects():
     user = get_current_user()
     subjects = request.get_json()['subjects']
-
+    print(subjects)
     student = Student.query.filter(Student.user_id == user.id).first()
     for sub in subjects:
         if 'checked' in sub:
             subject = Subject.query.filter(Subject.id == sub['id']).first()
-            if subject not in student.subjects:
-                student.subjects.append(subject)
-                db.session.commit()
+            add = StudentSubject(student_id=student.id, subject_id=subject.id)
+            db.session.add(add)
+            db.session.commit()
+            return redirect(url_for('my_subjects'))
     return redirect(url_for('my_subjects'))
 
 
@@ -50,12 +51,14 @@ def receive_subjects():
 def my_subjects():
     user = get_current_user()
     student = Student.query.filter(Student.user_id == user.id).first()
+    student_subjects = StudentSubject.query.filter(StudentSubject.student_id == student.id).order_by(
+        StudentSubject.id).all()
     subject_list = []
-    for subject in student.subjects:
+    for subject in student_subjects:
         info = {
-            "id": subject.id,
-            "name": subject.name,
-            "img": subject.img
+            "id": subject.subject.id,
+            "name": subject.subject.name,
+            "img": subject.subject.img
         }
         subject_list.append(info)
 
@@ -64,6 +67,8 @@ def my_subjects():
 
 @app.route('/my_lesson/<int:sub_id>')
 def my_lesson(sub_id):
+    user = get_current_user()
+    student = Student.query.filter(Student.user_id == user.id).first()
     subject = Subject.query.filter(Subject.id == sub_id).first()
     questions = Exercise.query.filter(Exercise.subject_id == sub_id).all()
     lesson = Lesson.query.filter(Lesson.subject_id == sub_id).first()
@@ -77,6 +82,25 @@ def my_lesson(sub_id):
         "img": lesson.img,
         "exercises": []
     }
+    course = SubjectLevel.query.filter(SubjectLevel.subject_id == sub_id).count()
+    done_course = StudentCourse.query.filter(StudentCourse.student_id == student.id,
+                                             StudentCourse.percentage == 100).count()
+    result = round((done_course / course) * 100)
+
+    filter = StudentSubject.query.filter(StudentSubject.student_id == student.id,
+                                         StudentSubject.subject_id == sub_id).first()
+    if filter:
+        StudentSubject.query.filter(StudentSubject.student_id == student.id,
+                                    StudentSubject.subject_id == sub_id).update(
+            {
+                "percentage": result
+            })
+
+        db.session.commit()
+    else:
+        student_lessons = StudentSubject(subject_id=sub_id, student_id=student.id)
+        db.session.add(student_lessons)
+        db.session.commit()
     return render_template('subject/subject.html', subject=subject, lesson=lesson, questions=questions,
                            level=level,
                            lesson_list=lesson_list, info=info)
@@ -95,12 +119,32 @@ def my_lesson_level(level_id):
         "img": lesson.img,
         "exercises": []
     }
+
     level = SubjectLevel.query.filter(SubjectLevel.id == level_id).first()
     subject = Subject.query.filter(Subject.id == level.subject_id).first()
     lesson = Lesson.query.filter(Lesson.level_id == level_id).order_by(Lesson.id).first()
     level = SubjectLevel.query.filter(SubjectLevel.id == level_id).order_by(SubjectLevel.id).all()
     lesson_list = Lesson.query.filter(Lesson.level_id == level_id).all()
+    done_lesson = StudentLesson.query.filter(StudentLesson.student_id == student.id,
+                                             StudentLesson.percentage == 100).count()
+    lessons = Lesson.query.filter(Lesson.level_id == level_id).count()
+    print(done_lesson)
+    result = round((done_lesson / lessons) * 100)
 
+    filter = StudentCourse.query.filter(StudentCourse.student_id == student.id,
+                                        StudentCourse.course_id == level_id).first()
+    if filter:
+        StudentCourse.query.filter(StudentCourse.student_id == student.id,
+                                   StudentCourse.course_id == level_id).update(
+            {
+                "percentage": result
+            })
+
+        db.session.commit()
+    else:
+        student_lessons = StudentCourse(course_id=level_id, student_id=student.id)
+        db.session.add(student_lessons)
+        db.session.commit()
     return render_template('subject/subject.html', level_id=level_id, lesson=lesson, subject=subject, level=level,
                            lesson_list=lesson_list, student=student, info=info)
 
@@ -118,10 +162,32 @@ def lesson_info(lesson_id):
     done_lessons = DoneLesson.query.filter(DoneLesson.student_id == student.id,
                                            DoneLesson.lesson_id == lesson_id).count()
     exercise = Exercise.query.filter(Exercise.lesson_id == lesson_id).count()
-    print(done_lessons)
-    print(exercise)
+
     result = round((done_lessons / exercise) * 100)
-    print(result)
+
+    filter = StudentLesson.query.filter(StudentLesson.student_id == student.id,
+                                        StudentLesson.lesson_id == lesson_id).first()
+    # finished = StudentLesson.query.filter(StudentLesson.student_id == student.id,
+    #                                       StudentLesson.lesson_id == lesson_id, StudentLesson.percentage == 100).first()
+    #
+    # if finished:
+    #     StudentLesson.query.filter(StudentLesson.student_id == student.id,
+    #                                StudentLesson.lesson_id == lesson_id, StudentLesson.percentage == 100).update(
+    #         {
+    #             "finished": True
+    #         })
+    #     db.session.commit()
+    if filter:
+        StudentLesson.query.filter(StudentLesson.student_id == student.id, StudentLesson.lesson_id == lesson_id).update(
+            {
+                "percentage": result
+            })
+        db.session.commit()
+    else:
+        student_lessons = StudentLesson(lesson_id=lesson_id, student_id=student.id)
+        db.session.add(student_lessons)
+        db.session.commit()
+
     info = {
         "id": lesson.id,
         "title": lesson.title,
@@ -165,7 +231,7 @@ def lesson_info(lesson_id):
                              boolean=True)
             db.session.add(add)
             db.session.commit()
-            pprint("hello")
+
         return redirect(url_for('lesson_info', lesson_id=lesson_id))
     return render_template('subject/subject.html', lesson=lesson, subject=subject, lesson_list=lesson_list,
                            student=student, info=info)
