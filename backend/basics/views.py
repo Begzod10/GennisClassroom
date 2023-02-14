@@ -8,15 +8,6 @@ from backend.models.basic_model import *
 from backend.teacher_groups.views import *
 
 
-# from english_words import get_english_words_set
-# import enchant
-
-# parser = GingerIt()
-#
-# web2lowerset = get_english_words_set(['web2'], lower=True)
-# d = enchant.Dict("en_US")
-
-
 @app.route('/', methods=['POST', 'GET'])
 def login():
     users = [
@@ -393,3 +384,4 @@ def register():
         db.session.add(student)
         db.session.commit()
     return render_template('register.html')
+

@@ -38,11 +38,7 @@ def checkFile(filename):
 
 @app.route("/subject", methods=["GET", "POST"])
 def subject():
-    myobj = json.dumps({'email': 'rimefara22@gmail.com', 'key': '88e15773-2877-4e58-965e-71625684c962'})
 
-    response = requests.post('https://id.copyleaks.com/v3/account/login/api', headers=headers, data=myobj)
-
-    print(response)
     if request.method == "POST":
         subject = request.form.get("subject")
         photo = request.files['file']
@@ -85,7 +81,6 @@ def exercise(lesson_id):
 @app.route("/fetch_exercise", methods=["GET", "POST"])
 def fetch_exercise():
     result = request.get_json()['result']
-    print(result)
     for item in result:
         type_id = item["type_id"]
         desc = item["desc"]
@@ -110,7 +105,6 @@ def creat_level():
 @app.route("/test/", methods=["POST"])
 def test():
     test = request.get_json()['list']
-    print(test)
     # level_id = SubjectLevel.qury.filter(SubjectLevel.id == level_id).first()
     for item in test:
         question = item["question"]
@@ -130,7 +124,6 @@ def test():
                                           lesson_id=lesson_id)
             db.session.add(addvariants)
             db.session.commit()
-    print(test)
     return jsonify({
         'success': True
     })
@@ -211,6 +204,31 @@ def student_question():
         return redirect(url_for('student_question'))
     student = StudentQuestion.query.filter(StudentQuestion.student_id == student_id).order_by(StudentQuestion.id)
     return render_template("question_answer/student_question.html", student=student)
+
+    # try:
+    #     user = get_current_user()
+    #     student = Student.query.filter(Student.user_id == user.id).first()
+    #
+    #     if request.method == "POST":
+    #         question = request.form.get("question")
+    #         photo = request.files['photo']
+    #         date = datetime.now()
+    #         folder = question_folder()
+    #         if photo and checkFile(photo.filename):
+    #             photo_file = secure_filename(photo.filename)
+    #             photo_url = "/" + folder + "/" + photo_file
+    #             app.config['UPLOAD_FOLDER'] = folder
+    #             photo.save(os.path.join(app.config['UPLOAD_FOLDER'], photo_file))
+    #             add = StudentQuestion(question=question, img=photo_url, date=date)
+    #             db.session.add(add)
+    #             db.session.commit()
+    #         return redirect(url_for('student_question'))
+    # except AttributeError:
+    #     return render_template("login.html")
+    # student_questions = StudentQuestion.query.filter(StudentQuestion.student_id == student.id).order_by(
+    #     StudentQuestion.id).all()
+    # return render_template("question_answer/student_question.html", student_questions=student_questions,
+    #                        student=student)
 
 
 @app.route('/question_answer', methods=["GET", "POST"])
