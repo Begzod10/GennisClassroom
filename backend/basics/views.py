@@ -5,7 +5,7 @@ from werkzeug.security import *
 from gingerit.gingerit import GingerIt
 from backend.models.basic_model import *
 
-from backend.teacher_groups.views import *
+from backend.teacher.views import *
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -119,8 +119,8 @@ def login():
             "username": "Monster",
             "father_name": "Fatxulla",
             "password": 12345,
-            "student": True,
-            "teacher": False,
+            "student": False,
+            "teacher": True,
             "group": [
                 {
                     "id": 1,
@@ -334,7 +334,7 @@ def login():
                                             student.groups.append(exist_group)
                                             db.session.commit()
 
-                        if teacher_id == True:
+                        else:
                             for gr in user['group']:
                                 exist_group = Group.query.filter(Group.platform_id == gr['id']).first()
                                 teacher = Teacher(user_id=add.id)
@@ -362,7 +362,7 @@ def login():
                     else:
                         return redirect(url_for('view_subjects'))
                 if teacher:
-                    return redirect(url_for('teacher_groups'))
+                    return redirect(url_for('teacher'))
             else:
                 print(False)
                 return redirect(url_for('login'))

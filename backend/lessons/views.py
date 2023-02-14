@@ -74,7 +74,7 @@ def my_lesson(sub_id):
     lesson = Lesson.query.filter(Lesson.subject_id == sub_id).first()
     lesson_list = Lesson.query.filter(Lesson.subject_id == sub_id).all()
     level = SubjectLevel.query.filter(SubjectLevel.subject_id == sub_id).order_by(SubjectLevel.id).all()
-    done = DoneLesson.query.first()
+    done = StudentExercise.query.first()
     info = {
         "id": lesson.id,
         "title": lesson.title,
@@ -110,7 +110,7 @@ def my_lesson(sub_id):
 def my_lesson_level(level_id):
     user = get_current_user()
     student = Student.query.filter(Student.user_id == user.id).first()
-    done = DoneLesson.query.first()
+    done = StudentExercise.query.first()
     lesson = Lesson.query.first()
     info = {
         "id": lesson.id,
@@ -157,10 +157,10 @@ def lesson_info(lesson_id):
     subject = Subject.query.filter(Subject.id == lesson.subject_id).first()
     lesson = Lesson.query.filter(Lesson.id == lesson_id).order_by(Lesson.id).first()
     lesson_list = Lesson.query.filter(Lesson.id == lesson_id).all()
-    done_lesson = DoneLesson.query.filter(DoneLesson.student_id == student.id,
-                                          DoneLesson.lesson_id == lesson_id).all()
-    done_lessons = DoneLesson.query.filter(DoneLesson.student_id == student.id,
-                                           DoneLesson.lesson_id == lesson_id).count()
+    done_lesson = StudentExercise.query.filter(StudentExercise.student_id == student.id,
+                                               StudentExercise.lesson_id == lesson_id).all()
+    done_lessons = StudentExercise.query.filter(StudentExercise.student_id == student.id,
+                                                StudentExercise.lesson_id == lesson_id).count()
     exercise = Exercise.query.filter(Exercise.lesson_id == lesson_id).count()
 
     result = round((done_lessons / exercise) * 100)
@@ -203,9 +203,9 @@ def lesson_info(lesson_id):
             "exercises_variants": [],
             "finished": False
         }
-        finished_exercise = DoneLesson.query.filter(DoneLesson.lesson_id == lesson_id,
-                                                    DoneLesson.student_id == student.id,
-                                                    DoneLesson.exercise_id == les.id).first()
+        finished_exercise = StudentExercise.query.filter(StudentExercise.lesson_id == lesson_id,
+                                                         StudentExercise.student_id == student.id,
+                                                         StudentExercise.exercise_id == les.id).first()
         if finished_exercise:
             new_info['finished'] = True
         for exer in les.exercise_variants:
@@ -219,16 +219,16 @@ def lesson_info(lesson_id):
     if request.method == "POST":
         var_id = request.form.get("id")
         answer = ExerciseAnswers.query.filter(ExerciseAnswers.id == var_id).first()
-        add = DoneLesson(lesson_id=answer.lesson_id, student_id=student.id, subject_id=answer.subject_id,
-                         level_id=answer.level_id,
-                         type_id=answer.type_id, exercise_id=answer.exercise_id, answer_id=answer.id, boolean=False)
+        add = StudentExercise(lesson_id=answer.lesson_id, student_id=student.id, subject_id=answer.subject_id,
+                              level_id=answer.level_id,
+                              type_id=answer.type_id, exercise_id=answer.exercise_id, answer_id=answer.id, boolean=False)
         db.session.add(add)
         db.session.commit()
         if answer.answer == True:
-            add = DoneLesson(lesson_id=answer.lesson_id, student_id=student.id, subject_id=answer.subject_id,
-                             level_id=answer.level_id,
-                             type_id=answer.type_id, exercise_id=answer.exercise_id, answer_id=answer.id,
-                             boolean=True)
+            add = StudentExercise(lesson_id=answer.lesson_id, student_id=student.id, subject_id=answer.subject_id,
+                                  level_id=answer.level_id,
+                                  type_id=answer.type_id, exercise_id=answer.exercise_id, answer_id=answer.id,
+                                  boolean=True)
             db.session.add(add)
             db.session.commit()
 
