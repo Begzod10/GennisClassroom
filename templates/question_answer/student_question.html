@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>StudentQuestion</title>
+</head>
+<body>
+
+<form action="{{ url_for("student_question", student_id=student_id) }}" method="post" enctype="multipart/form-data">
+
+    <input type="text" placeholder="Question" name="question">
+    <input type="file" name="photo">
+    <input type="submit">
+
+</form>
+
+</body>
+</html>
