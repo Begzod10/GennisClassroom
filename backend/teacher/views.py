@@ -7,4 +7,6 @@ from pprint import pprint
 
 @app.route('/teacher_groups')
 def teacher_groups():
-    return render_template('teacher groups/choose course.html')
+    user = get_current_user()
+    teacher = Teacher.query.filter(Teacher.user_id == user.id).first()
+    return render_template('teacher groups/choose course.html', teacher=teacher)
