@@ -3,11 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .question_answer {
+            display: flex;
+        }
+        .question_answer_main{
+            padding: 40px 0;
+        }
+    </style>
 </head>
 <body>
 
 
+<form action="{{ url_for("question_answer", question_id=question_id) }}" method="post" enctype="multipart/form-data">
+    <div class="question_answer">
 
+        <input type="text" placeholder="answer" name="answer">
+        <input type="file" name="photo">
+
+    </div>
+    <input type="submit">
+</form>
+
+
+{#<form action="{{ url_for("answer_comment") }}" method="post" enctype="multipart/form-data">#}
+{#    <div class="question_answer_main">#}
+{#        <h1>Comment</h1>#}
+{#        <input type="text" name="comment">#}
+{#    </div>#}
+{#    <input type="submit">#}
+{#</form>#}
 
 
 </body>

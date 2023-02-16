@@ -157,3 +157,17 @@ fetch("/get_subjects/", {
     })
 
 
+
+
+
+
+
+// button.addEventListener("click", function () {
+//     fetch('/result', {
+//         method: "POST", body: JSON.stringify({
+//             "result": student_list,
+//         }), headers: {
+//             'Content-type': 'application/json'
+//         }
+//     })
+// })

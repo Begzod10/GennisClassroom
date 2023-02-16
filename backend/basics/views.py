@@ -54,7 +54,7 @@ def login():
                     "group_name": "biologiya",
                     "group_subject": "biologiya"
                 }
-            ],
+            ], 
             "photo_profile": "",
         },
         {

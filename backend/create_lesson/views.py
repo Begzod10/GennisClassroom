@@ -30,6 +30,11 @@ def question_folder():
     return upload_folder
 
 
+def answer_folder():
+    upload_folder = 'static/img/answer'
+    return upload_folder
+
+
 def checkFile(filename):
     value = '.' in filename
     type_file = filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -38,7 +43,10 @@ def checkFile(filename):
 
 @app.route("/subject", methods=["GET", "POST"])
 def subject():
+    myobj = json.dumps({'email': 'rimefara22@gmail.com', 'key': '88e15773-2877-4e58-965e-71625684c962'})
+    response = requests.post('https://id.copyleaks.com/v3/account/login/api', headers=headers, data=myobj)
 
+    print(response)
     if request.method == "POST":
         subject = request.form.get("subject")
         photo = request.files['file']
@@ -188,22 +196,52 @@ def filter_list(level_id):
 
 @app.route('/student_question', methods=["GET", "POST"])
 def student_question():
-    if request.method == "POST":
-        question = request.form.get("question")
-        photo = request.files['photo']
-        date = datetime.now()
-        folder = question_folder()
-        if photo and checkFile(photo.filename):
-            photo_file = secure_filename(photo.filename)
-            photo_url = "/" + folder + "/" + photo_file
-            app.config['UPLOAD_FOLDER'] = folder
-            photo.save(os.path.join(app.config['UPLOAD_FOLDER'], photo_file))
-            add = StudentQuestion(question=question, img=photo_url, date=date)
-            db.session.add(add)
-            db.session.commit()
-        return redirect(url_for('student_question'))
-    student = StudentQuestion.query.filter(StudentQuestion.student_id == student_id).order_by(StudentQuestion.id)
-    return render_template("question_answer/student_question.html", student=student)
+
+    user = get_current_user()
+    student = Student.query.filter(Student.user_id == user.id).first()
+    subject = Subject.query.all()
+    try:
+        if request.method == "POST":
+            question = request.form.get("question")
+            sub_id = request.form.get("sub_id")
+            photo = request.files['photo']
+            date = datetime.now()
+            folder = question_folder()
+            if photo and checkFile(photo.filename):
+                photo_file = secure_filename(photo.filename)
+                photo_url = "/" + folder + "/" + photo_file
+                app.config['UPLOAD_FOLDER'] = folder
+                photo.save(os.path.join(app.config['UPLOAD_FOLDER'], photo_file))
+                add = StudentQuestion(question=question, img=photo_url, date=date, student_id=student.id,
+                                      subject_id=sub_id)
+                db.session.add(add)
+                db.session.commit()
+            return redirect(url_for('student_question'))
+    except AttributeError:
+        return redirect(url_for("login"))
+
+    student_questions = StudentQuestion.query.filter(StudentQuestion.student_id == student.id).order_by(
+        StudentQuestion.id).all()
+    questions = StudentQuestion.query.filter(StudentQuestion.student_id == student.id).order_by(StudentQuestion.id)
+    return render_template("question_answer/student_question.html", student_questions=student_questions,
+                           student=student, questions=questions, subject=subject)
+
+    # if request.method == "POST":
+    #     question = request.form.get("question")
+    #     photo = request.files['photo']
+    #     date = datetime.now()
+    #     folder = question_folder()
+    #     if photo and checkFile(photo.filename):
+    #         photo_file = secure_filename(photo.filename)
+    #         photo_url = "/" + folder + "/" + photo_file
+    #         app.config['UPLOAD_FOLDER'] = folder
+    #         photo.save(os.path.join(app.config['UPLOAD_FOLDER'], photo_file))
+    #         add = StudentQuestion(question=question, img=photo_url, date=date)
+    #         db.session.add(add)
+    #         db.session.commit()
+    #     return redirect(url_for('student_question'))
+    # student = StudentQuestion.query.filter(StudentQuestion.student_id == student_id).order_by(StudentQuestion.id)
+    # return render_template("question_answer/student_question.html", student=student)
 
     # try:
     #     user = get_current_user()
@@ -231,11 +269,73 @@ def student_question():
     #                        student=student)
 
 
-@app.route('/question_answer', methods=["GET", "POST"])
-def question_answer():
-    return render_template('question_answer/question_answer.html')
+
+@app.route('/question_answer/<int:question_id>', methods=["GET", "POST"])
+def question_answer(question_id):
+    user = get_current_user()
+    student = Student.query.filter(Student.user_id == user.id).first()
+    question = StudentQuestion.query.filter(StudentQuestion.id == question_id).first()
+    if request.method == "POST":
+        answer = request.form.get("answer")
+        photo = request.files['photo']
+        date = datetime.now()
+        folder = answer_folder()
+        if photo and checkFile(photo.filename):
+            photo_file = secure_filename(photo.filename)
+            photo_url = "/" + folder + "/" + photo_file
+            app.config['UPLOAD_FOLDER'] = folder
+            photo.save(os.path.join(app.config['UPLOAD_FOLDER'], photo_file))
+            add = QuestionAnswers(answer=answer, img=photo_url, date=date, user_id=student.id, question_id=question_id,
+                                  subject_id=question.subject_id)
+            db.session.add(add)
+            db.session.commit()
+        return redirect(url_for('question_answer', question_id=question_id))
+    return render_template('question_answer/question_answer.html', question_id=question_id)
 
 
-@app.route('/answer_comment', methods=["GET", "POST"])
-def answer_comment():
-    return render_template('question_answer/answer_comment.html')
+@app.route('/question_list', methods=["GET"])
+def question_list():
+    questions = StudentQuestion.query.all()
+    return render_template("question_answer/question_list.html", questions=questions)
+
+
+@app.route('/answer_comment/<int:question_id>', methods=["GET", "POST"])
+def answer_comment(question_id):
+    user = get_current_user()
+    student = Student.query.filter(Student.user_id == user.id).first()
+    answer = QuestionAnswers.query.filter(QuestionAnswers.question_id == question_id).all()
+    return render_template('question_answer/answer_comment.html', student=student, question_id=question_id,
+                           answer=answer)
+
+
+@app.route('/all_question', methods=["GET", "POST"])
+def all_question():
+    user = get_current_user()
+    student = Student.query.filter(Student.user_id == user.id).first()
+    questions = StudentQuestion.query.filter(StudentQuestion.student_id == student.id).order_by(StudentQuestion.id)
+    return render_template("question_answer/all question.html", student=student, questions=questions)
+
+
+@app.route('/create_comment/<int:answer_id>', methods=["GET", "POST"])
+def create_comment(answer_id):
+    user = get_current_user()
+    student = Student.query.filter(Student.user_id == user.id).first()
+    answer = QuestionAnswers.query.filter(QuestionAnswers.id == answer_id).first()
+    if request.method == "POST":
+        comment = request.form.get("comment")
+        date = datetime.now()
+        add = AnswerComment(comment=comment, date=date, user_id=student.id,
+                            subject_id=answer.subject_id, question_id=answer.question_id, answer_id=answer_id)
+
+        db.session.add(add)
+        db.session.commit()
+        return redirect(url_for("create_comment", answer=answer, answer_id=answer_id))
+    return render_template("question_answer/create_comment.html", student=student, answer_id=answer_id,
+                           answer=answer)
+
+
+@app.route('/my_question', methods=["GET", "POST"])
+def my_question():
+    user = get_current_user()
+    questions = StudentQuestion.query.filter(StudentQuestion.student_id == StudentQuestion.question).all()
+    return render_template("my_question/my_question.html", user=user, questions=questions)
