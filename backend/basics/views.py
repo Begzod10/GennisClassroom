@@ -5,6 +5,8 @@ from werkzeug.security import *
 from gingerit.gingerit import GingerIt
 from backend.models.basic_model import *
 
+from backend.teacher.views import *
+
 
 @app.route('/', methods=['POST', 'GET'])
 def login():
@@ -15,8 +17,9 @@ def login():
             "surname": "Sobirov",
             "username": "Sob1rov",
             "father_name": "Sherzod",
-            "teacher_id": 1,
             "password": 12345,
+            "student": True,
+            "teacher": False,
             "group": [
                 {
                     "id": 1,
@@ -32,8 +35,9 @@ def login():
             "surname": "Abdusamatov",
             "username": "Aybek",
             "father_name": "Baxtjan",
-            "teacher_id": 2,
             "password": 12345,
+            "student": True,
+            "teacher": False,
             "group": [
                 {
                     "id": 1,
@@ -59,8 +63,10 @@ def login():
             "surname": "Jumaniyozov",
             "username": "rimefara",
             "father_name": "Jumaniyoz",
-            "teacher_id": 3,
             "password": 12345,
+            "teacher_id": 3,
+            "student": True,
+            "teacher": False,
             "group": [
                 {
                     "id": 3,
@@ -76,8 +82,9 @@ def login():
             "surname": "Nimatilloyev",
             "username": "Asad",
             "father_name": "Nimat",
-            "teacher_id": 3,
             "password": 12345,
+            "student": True,
+            "teacher": False,
             "group": [
                 {
                     "id": 1,
@@ -93,8 +100,9 @@ def login():
             "surname": "Xudoyberganov",
             "username": "Shox",
             "father_name": "Xudoyberg",
-            "teacher_id": 5,
             "password": 12345,
+            "student": True,
+            "teacher": False,
             "group": [
                 {
                     "id": 1,
@@ -110,8 +118,9 @@ def login():
             "surname": "Fatxullayev",
             "username": "Monster",
             "father_name": "Fatxulla",
-            "teacher_id": 6,
             "password": 12345,
+            "student": False,
+            "teacher": True,
             "group": [
                 {
                     "id": 1,
@@ -127,11 +136,156 @@ def login():
             "surname": "Mirmuhsinov",
             "username": "Asi",
             "father_name": "Mirmuhsin",
-            "teacher_id": 6,
             "password": 12345,
+            "student": True,
+            "teacher": False,
             "group": [
                 {
                     "id": 1,
+                    "group_name": "Tarix",
+                    "group_subject": "Tarix"
+                }
+            ],
+            "photo_profile": "",
+        },
+        {
+            "id": 20,
+            "name": "ismi yo",
+            "surname": "yo",
+            "username": "ismiyo",
+            "father_name": "otasi yo",
+            "password": 12345678,
+            "student": False,
+            "teacher": True,
+            "group": [
+                {
+                    "id": 1,
+                    "group_name": "Tarix",
+                    "group_subject": "Tarix"
+                }
+            ],
+            "photo_profile": "",
+        },
+        {
+            "id": 21,
+            "name": "yetim",
+            "surname": "yetim",
+            "username": "yetim",
+            "father_name": "yetim",
+            "password": 12345678,
+            "student": True,
+            "teacher": False,
+            "group": [
+                {
+                    "id": 1,
+                    "group_name": "Tarix",
+                    "group_subject": "Tarix"
+                }
+            ],
+            "photo_profile": "",
+        },
+        {
+            "id": 70,
+            "name": "cmo",
+            "surname": "cmo",
+            "username": "cmo",
+            "father_name": "cmo",
+            "password": 12345678,
+            "student": True,
+            "teacher": False,
+            "group": [
+                {
+                    "id": 5,
+                    "group_name": "Tarix",
+                    "group_subject": "Tarix"
+                }
+            ],
+            "photo_profile": "",
+        },
+        {
+            "id": 19,
+            "name": "lox",
+            "surname": "lox",
+            "username": "lox",
+            "father_name": "lox",
+            "password": 12345678,
+            "student": True,
+            "teacher": False,
+            "group": [
+                {
+                    "id": 5,
+                    "group_name": "Tarix",
+                    "group_subject": "Tarix"
+                }
+            ],
+            "photo_profile": "",
+        },
+        {
+            "id": 13,
+            "name": "latta",
+            "surname": "latta",
+            "username": "latta",
+            "father_name": "latta",
+            "password": 12345678,
+            "student": False,
+            "teacher": True,
+            "group": [
+                {
+                    "id": 9,
+                    "group_name": "Tarix",
+                    "group_subject": "Tarix"
+                }
+            ],
+            "photo_profile": "",
+        },
+        {
+            "id": 99,
+            "name": "zaybal",
+            "surname": "zaybal",
+            "username": "zaybal",
+            "father_name": "zaybal",
+            "password": 12345678,
+            "student": True,
+            "teacher": False,
+            "group": [
+                {
+                    "id": 9,
+                    "group_name": "Tarix",
+                    "group_subject": "Tarix"
+                }
+            ],
+            "photo_profile": "",
+        },
+        {
+            "id": 100,
+            "name": "kot",
+            "surname": "kot",
+            "username": "kot",
+            "father_name": "kot",
+            "password": 12345678,
+            "student": False,
+            "teacher": True,
+            "group": [
+                {
+                    "id": 9,
+                    "group_name": "Tarix",
+                    "group_subject": "Tarix"
+                }
+            ],
+            "photo_profile": "",
+        },
+        {
+            "id": 101,
+            "name": "qotobow",
+            "surname": "qotobow",
+            "username": "qotobow",
+            "father_name": "qotobow",
+            "password": 12345678,
+            "student": False,
+            "teacher": True,
+            "group": [
+                {
+                    "id": 9,
                     "group_name": "Tarix",
                     "group_subject": "Tarix"
                 }
@@ -142,42 +296,76 @@ def login():
     if request.method == "POST":
         username = request.form.get('username')
         password = request.form.get('password')
-        # user = User.query.filter(User.username == username).first()
         platform_user = User.query.filter(User.username == username).first()
         if not platform_user:
             for user in users:
                 id = user["id"]
                 nik = user["username"]
                 name = user["name"]
+                print(user['password'])
                 platform_password = str(user["password"])
                 surname = user["surname"]
+                teacher_id = user["teacher"]
+                student_id = user["student"]
                 hashed = generate_password_hash(password=platform_password, method="sha256")
                 if username == nik:
-                    print("ishladi")
                     if platform_user:
                         print("bu oquvchi bor")
                     else:
                         add = User(name=name, surname=surname, username=nik, password=hashed, platform_id=id)
                         db.session.add(add)
                         db.session.commit()
-                        student = Student(user_id=add.id)
-                        db.session.add(student)
-                        db.session.commit()
+                        if student_id == True:
+                            for gr in user['group']:
+                                exist_group = Group.query.filter(Group.platform_id == gr['id']).first()
+
+                                student = Student(user_id=add.id)
+                                db.session.add(student)
+                                db.session.commit()
+                                if not exist_group:
+                                    group_add = Group(platform_id=gr['id'], name=gr['group_name'])
+                                    db.session.add(group_add)
+                                    db.session.commit()
+                                    if group_add not in student.groups:
+                                        student.groups.append(group_add)
+                                        db.session.commit()
+                                    else:
+                                        if exist_group not in student.groups:
+                                            student.groups.append(exist_group)
+                                            db.session.commit()
+
+                        else:
+                            for gr in user['group']:
+                                exist_group = Group.query.filter(Group.platform_id == gr['id']).first()
+                                teacher = Teacher(user_id=add.id)
+                                db.session.add(teacher)
+                                db.session.commit()
+                                if not exist_group:
+                                    group_add = Group(platform_id=gr['id'], name=gr['group_name'])
+                                    db.session.add(group_add)
+                                    db.session.commit()
+                                    if group_add not in teacher.groups:
+                                        teacher.groups.append(group_add)
+                                        db.session.commit()
+                                    else:
+                                        if exist_group not in teacher.groups:
+                                            teacher.groups.append(exist_group)
+                                            db.session.commit()
         else:
             if platform_user and check_password_hash(platform_user.password, password):
                 session['username'] = platform_user.username
                 student = Student.query.filter(Student.user_id == platform_user.id).first()
                 teacher = Teacher.query.filter(Teacher.user_id == platform_user.id).first()
                 if student:
-                    if student.subjects:
+                    if student.studentsubject:
                         return redirect(url_for('my_subjects'))
                     else:
                         return redirect(url_for('view_subjects'))
                 if teacher:
-                    return redirect(url_for('essays_list'))
+                    return redirect(url_for('teacher'))
             else:
+                print(False)
                 return redirect(url_for('login'))
-
     return render_template('login.html')
 
 

@@ -19,6 +19,7 @@ class Lesson(db.Model):
     exercise = relationship("Exercise", backref="lesson", order_by="Exercise.id")
     answers = relationship("ExerciseAnswers", backref="lesson", order_by="ExerciseAnswers.id")
     donelesson = relationship("DoneLesson", backref="lesson", order_by="DoneLesson.id")
+    studentlesson = relationship("StudentLesson", backref="lesson", order_by="StudentLesson.id")
 
 
 class ExerciseTypes(db.Model):
