@@ -2,7 +2,6 @@ from app import *
 import json
 from backend.basics.settings import *
 from werkzeug.security import *
-from gingerit.gingerit import GingerIt
 from backend.models.basic_model import *
 
 from backend.teacher.views import *
