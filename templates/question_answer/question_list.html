@@ -8,7 +8,7 @@
 
     {% for question in questions %}
     <div class="all_questions">
-        <a href="{{ url_for('answer_comment', question_id=question.id) }}">{{ question.question }}</a>
+        <a href="{{ url_for('question_answer', question_id=question.id) }}">{{ question.question }}</a>
     </div>
 {% endfor %}
 

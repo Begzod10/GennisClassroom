@@ -7,7 +7,7 @@
 <body>
 <ul>
     {% for ans in answer %}
-        <li><a href="{{ url_for("create_comment", question_id=question_id) }}">{{ ans.answer }}</a></li>
+        <li><a href="{{ url_for("create_comment", answer_id=ans.id) }}">{{ ans.answer }}</a></li>
     {% endfor %}
 </ul>
 

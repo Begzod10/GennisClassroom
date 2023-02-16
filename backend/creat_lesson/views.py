@@ -89,7 +89,6 @@ def exercise(lesson_id):
 @app.route("/fetch_exercise", methods=["GET", "POST"])
 def fetch_exercise():
     result = request.get_json()['result']
-    print(result)
     for item in result:
         type_id = item["type_id"]
         desc = item["desc"]
@@ -114,7 +113,6 @@ def creat_level():
 @app.route("/test/", methods=["POST"])
 def test():
     test = request.get_json()['list']
-    print(test)
     # level_id = SubjectLevel.qury.filter(SubjectLevel.id == level_id).first()
     for item in test:
         question = item["question"]
@@ -134,7 +132,6 @@ def test():
                                           lesson_id=lesson_id)
             db.session.add(addvariants)
             db.session.commit()
-    print(test)
     return jsonify({
         'success': True
     })
@@ -254,7 +251,7 @@ def question_answer(question_id):
 
 @app.route('/question_list', methods=["GET"])
 def question_list():
-    questions = QuestionAnswers.query.all()
+    questions = StudentQuestion.query.all()
     return render_template("question_answer/question_list.html", questions=questions)
 
 
@@ -275,26 +272,26 @@ def all_question():
     return render_template("question_answer/all question.html", student=student, questions=questions)
 
 
-@app.route('/create_comment/<int:question_id>', methods=["GET", "POST"])
-def create_comment(question_id):
+@app.route('/create_comment/<int:answer_id>', methods=["GET", "POST"])
+def create_comment(answer_id):
     user = get_current_user()
     student = Student.query.filter(Student.user_id == user.id).first()
-    answer = QuestionAnswers.query.filter(QuestionAnswers.id == question_id).first()
+    answer = QuestionAnswers.query.filter(QuestionAnswers.id == answer_id).first()
     if request.method == "POST":
         comment = request.form.get("comment")
         date = datetime.now()
         add = AnswerComment(comment=comment, date=date, user_id=student.id,
-                            subject_id=answer.subject_id)
+                            subject_id=answer.subject_id, question_id=answer.question_id, answer_id=answer_id)
 
         db.session.add(add)
         db.session.commit()
-        return redirect(url_for("create_comment", answer=answer, question_id=question_id))
-    return render_template("question_answer/create_comment.html", student=student, question_id=question_id,
+        return redirect(url_for("create_comment", answer=answer, answer_id=answer_id))
+    return render_template("question_answer/create_comment.html", student=student, answer_id=answer_id,
                            answer=answer)
 
 
 @app.route('/my_question', methods=["GET", "POST"])
 def my_question():
     user = get_current_user()
-
-    return render_template("my_question/my_question.html", user=user)
+    questions = StudentQuestion.query.filter(StudentQuestion.student_id == StudentQuestion.question).all()
+    return render_template("my_question/my_question.html", user=user, questions=questions)
