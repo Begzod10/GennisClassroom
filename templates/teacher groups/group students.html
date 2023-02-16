@@ -6,9 +6,16 @@
 </head>
 <body>
 {% for student in group.student %}
-    <h1>{{ student.user.name}}</h1>
+    <h1>{{ student.user.name }}</h1>
 {% endfor %}
 
-
+<form action="{{ url_for("students", group_id=group_id) }}" method="post">
+    <select name="level" id="">
+        {% for lev in levels %}
+            <option value="{{ lev.id }}">{{ lev.name }}</option>
+        {% endfor %}
+    </select>
+    <button>sumbit</button>
+</form>
 </body>
 </html>
