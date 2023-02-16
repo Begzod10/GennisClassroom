@@ -2,7 +2,6 @@ from app import *
 import json
 from backend.basics.settings import *
 from werkzeug.security import *
-from gingerit.gingerit import GingerIt
 from backend.models.basic_model import *
 
 from backend.teacher.views import *
@@ -42,7 +41,7 @@ def login():
                 {
                     "id": 1,
                     "group_name": "A1",
-                    "group_subject": "English"
+                    "group_subject": "Ingliz tili"
                 },
                 {
                     "id": 2,
@@ -52,9 +51,9 @@ def login():
                 {
                     "id": 3,
                     "group_name": "biologiya",
-                    "group_subject": "biologiya"
+                    "group_subject": "Biologiya"
                 }
-            ], 
+            ],
             "photo_profile": "",
         },
         {
@@ -71,7 +70,7 @@ def login():
                 {
                     "id": 3,
                     "group_name": "B1",
-                    "group_subject": "English"
+                    "group_subject": "Ingliz tili"
                 }
             ],
             "photo_profile": "",
@@ -323,7 +322,7 @@ def login():
                 {
                     "id": 10,
                     "group_name": "Tarix",
-                    "subject_id": 2,
+
                     "group_subject": "Tarix"
                 }
             ],
@@ -342,8 +341,8 @@ def login():
                 {
                     "id": 11,
                     "group_name": "ing",
-                    "subject_id": 2,
-                    "group_subject": "ing"
+
+                    "group_subject": "Ingliz tili"
                 }
             ],
             "photo_profile": "",
@@ -358,7 +357,6 @@ def login():
                 id = user["id"]
                 nik = user["username"]
                 name = user["name"]
-                print(user['password'])
                 platform_password = str(user["password"])
                 surname = user["surname"]
                 teacher_id = user["teacher"]
@@ -378,8 +376,8 @@ def login():
                             for gr in user['group']:
                                 exist_group = Group.query.filter(Group.platform_id == gr['id']).first()
                                 if not exist_group:
-                                    group_add = Group(platform_id=gr['id'], name=gr['group_name'],
-                                                      subject_id=gr['subject_id'])
+                                    subject = Subject.query.filter(Subject.name == gr['group_subject']).first()
+                                    group_add = Group(platform_id=gr['id'], name=gr['group_name'], subject_id=subject.id)
                                     db.session.add(group_add)
                                     db.session.commit()
                                     if group_add not in student.groups:
@@ -395,11 +393,11 @@ def login():
                             db.session.add(teacher)
                             db.session.commit()
                             for gr in user['group']:
-                                print(True, False)
                                 exist_group = Group.query.filter(Group.platform_id == gr['id']).first()
                                 if not exist_group:
+                                    subject = Subject.query.filter(Subject.name == gr['group_subject']).first()
                                     group_add = Group(platform_id=gr['id'], name=gr['group_name'],
-                                                      subject_id=gr['subject_id'])
+                                                      subject_id=subject.id)
                                     db.session.add(group_add)
                                     db.session.commit()
                                     if group_add not in teacher.groups:
