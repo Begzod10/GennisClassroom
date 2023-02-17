@@ -66,6 +66,7 @@ class Group(db.Model):
     name = Column(String)
     subject_id = Column(Integer, ForeignKey("subject.id"))
     platform_id = Column(Integer)
+    course_id = Column(Integer, ForeignKey("subject_level.id"))
 
 
 db.Table('student_group',
