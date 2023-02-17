@@ -46,7 +46,7 @@ class Student(db.Model):
     level_category = Column(Integer, ForeignKey('level_category.id'))
     # subjects = relationship("SubjectSubject",  backref="student", lazy="select", order_by="Subject.id")
     student_question = relationship("StudentQuestion", lazy="select", order_by="StudentQuestion.id")
-    donelesson = relationship("DoneLesson", backref="student", order_by="DoneLesson.id")
+    donelesson = relationship("StudentExercise", backref="student", order_by="StudentExercise.id")
     groups = relationship("Group", secondary="student_group", backref="student", order_by="Group.id")
     studentlesson = relationship("StudentLesson", backref="student", order_by="StudentLesson.id")
     studentcourse = relationship("StudentCourse", backref="student", order_by="StudentCourse.id")
@@ -66,6 +66,7 @@ class Group(db.Model):
     name = Column(String)
     subject_id = Column(Integer, ForeignKey("subject.id"))
     platform_id = Column(Integer)
+    course_id = Column(Integer, ForeignKey("subject_level.id"))
 
 
 db.Table('student_group',

@@ -18,7 +18,7 @@ class Lesson(db.Model):
     video = Column(String)
     exercise = relationship("Exercise", backref="lesson", order_by="Exercise.id")
     answers = relationship("ExerciseAnswers", backref="lesson", order_by="ExerciseAnswers.id")
-    donelesson = relationship("DoneLesson", backref="lesson", order_by="DoneLesson.id")
+    donelesson = relationship("StudentExercise", backref="lesson", order_by="StudentExercise.id")
     studentlesson = relationship("StudentLesson", backref="lesson", order_by="StudentLesson.id")
 
 
@@ -27,7 +27,7 @@ class ExerciseTypes(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     lesson = relationship("Lesson", backref="exercise_types", order_by="Lesson.id")
-    donelessons = relationship("DoneLesson", backref="exercise_types", order_by="DoneLesson.id")
+    donelessons = relationship("StudentExercise", backref="exercise_types", order_by="StudentExercise.id")
 
 
 class Exercise(db.Model):
@@ -39,7 +39,7 @@ class Exercise(db.Model):
     subject_id = Column(Integer, ForeignKey("subject.id"))
     level_id = Column(Integer, ForeignKey("subject_level.id"))
     exercise_variants = relationship("ExerciseAnswers", backref="exercise", order_by="ExerciseAnswers.id")
-    donelessons = relationship("DoneLesson", backref="exercise", order_by="DoneLesson.id")
+    donelessons = relationship("StudentExercise", backref="exercise", order_by="StudentExercise.id")
 
 
 class ExerciseAnswers(db.Model):
@@ -52,7 +52,7 @@ class ExerciseAnswers(db.Model):
     level_id = Column(Integer, ForeignKey("subject_level.id"))
     desc = Column(String)
     answer = Column(Boolean, default=False)
-    donelessons = relationship("DoneLesson", backref="exercise_answers", order_by="DoneLesson.id")
+    donelessons = relationship("StudentExercise", backref="exercise_answers", order_by="StudentExercise.id")
 
 
 class EssayTypes(db.Model):

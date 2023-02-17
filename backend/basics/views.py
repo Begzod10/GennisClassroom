@@ -2,7 +2,6 @@ from app import *
 import json
 from backend.basics.settings import *
 from werkzeug.security import *
-from gingerit.gingerit import GingerIt
 from backend.models.basic_model import *
 
 from backend.teacher.views import *
@@ -42,7 +41,7 @@ def login():
                 {
                     "id": 1,
                     "group_name": "A1",
-                    "group_subject": "English"
+                    "group_subject": "Ingliz tili"
                 },
                 {
                     "id": 2,
@@ -52,9 +51,9 @@ def login():
                 {
                     "id": 3,
                     "group_name": "biologiya",
-                    "group_subject": "biologiya"
+                    "group_subject": "Biologiya"
                 }
-            ], 
+            ],
             "photo_profile": "",
         },
         {
@@ -71,7 +70,7 @@ def login():
                 {
                     "id": 3,
                     "group_name": "B1",
-                    "group_subject": "English"
+                    "group_subject": "Ingliz tili"
                 }
             ],
             "photo_profile": "",
@@ -209,8 +208,8 @@ def login():
             "username": "lox",
             "father_name": "lox",
             "password": 12345678,
-            "student": True,
-            "teacher": False,
+            "student": False,
+            "teacher": True,
             "group": [
                 {
                     "id": 5,
@@ -291,6 +290,62 @@ def login():
                 }
             ],
             "photo_profile": "",
+        },
+        {
+            "id": 103,
+            "name": "qotobow",
+            "surname": "qotobow",
+            "username": "qotobow2",
+            "father_name": "qotobow",
+            "password": 12345678,
+            "student": False,
+            "teacher": True,
+            "group": [
+                {
+                    "id": 9,
+                    "group_name": "Tarix",
+                    "group_subject": "Tarix"
+                }
+            ],
+            "photo_profile": "",
+        },
+        {
+            "id": 55,
+            "name": "qotobow",
+            "surname": "qotobow",
+            "username": "pidr",
+            "father_name": "qotowbow",
+            "password": 12345678,
+            "student": False,
+            "teacher": True,
+            "group": [
+                {
+                    "id": 10,
+                    "group_name": "Tarix",
+
+                    "group_subject": "Tarix"
+                }
+            ],
+            "photo_profile": "",
+        },
+        {
+            "id": 97,
+            "name": "qotobow",
+            "surname": "qotobow",
+            "username": "user",
+            "father_name": "qotowbow",
+            "password": 12345678,
+            "student": False,
+            "teacher": True,
+            "group": [
+                {
+                    "id": 11,
+                    "group_name": "ing",
+
+                    "group_subject": "Ingliz tili"
+                }
+            ],
+            "photo_profile": "",
         }
     ]
     if request.method == "POST":
@@ -302,7 +357,6 @@ def login():
                 id = user["id"]
                 nik = user["username"]
                 name = user["name"]
-                print(user['password'])
                 platform_password = str(user["password"])
                 surname = user["surname"]
                 teacher_id = user["teacher"]
@@ -316,14 +370,14 @@ def login():
                         db.session.add(add)
                         db.session.commit()
                         if student_id == True:
+                            student = Student(user_id=add.id)
+                            db.session.add(student)
+                            db.session.commit()
                             for gr in user['group']:
                                 exist_group = Group.query.filter(Group.platform_id == gr['id']).first()
-
-                                student = Student(user_id=add.id)
-                                db.session.add(student)
-                                db.session.commit()
                                 if not exist_group:
-                                    group_add = Group(platform_id=gr['id'], name=gr['group_name'])
+                                    subject = Subject.query.filter(Subject.name == gr['group_subject']).first()
+                                    group_add = Group(platform_id=gr['id'], name=gr['group_name'], subject_id=subject.id)
                                     db.session.add(group_add)
                                     db.session.commit()
                                     if group_add not in student.groups:
@@ -335,22 +389,24 @@ def login():
                                             db.session.commit()
 
                         else:
+                            teacher = Teacher(user_id=add.id)
+                            db.session.add(teacher)
+                            db.session.commit()
                             for gr in user['group']:
                                 exist_group = Group.query.filter(Group.platform_id == gr['id']).first()
-                                teacher = Teacher(user_id=add.id)
-                                db.session.add(teacher)
-                                db.session.commit()
                                 if not exist_group:
-                                    group_add = Group(platform_id=gr['id'], name=gr['group_name'])
+                                    subject = Subject.query.filter(Subject.name == gr['group_subject']).first()
+                                    group_add = Group(platform_id=gr['id'], name=gr['group_name'],
+                                                      subject_id=subject.id)
                                     db.session.add(group_add)
                                     db.session.commit()
                                     if group_add not in teacher.groups:
                                         teacher.groups.append(group_add)
                                         db.session.commit()
-                                    else:
-                                        if exist_group not in teacher.groups:
-                                            teacher.groups.append(exist_group)
-                                            db.session.commit()
+                                else:
+                                    if exist_group not in teacher.groups:
+                                        teacher.groups.append(exist_group)
+                                        db.session.commit()
         else:
             if platform_user and check_password_hash(platform_user.password, password):
                 session['username'] = platform_user.username
@@ -362,7 +418,7 @@ def login():
                     else:
                         return redirect(url_for('view_subjects'))
                 if teacher:
-                    return redirect(url_for('teacher'))
+                    return redirect(url_for('teacher_groups'))
             else:
                 print(False)
                 return redirect(url_for('login'))
@@ -384,4 +440,3 @@ def register():
         db.session.add(student)
         db.session.commit()
     return render_template('register.html')
-

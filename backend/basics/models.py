@@ -13,7 +13,7 @@ class Subject(db.Model):
     student_question = relationship("StudentQuestion", lazy="select", order_by="StudentQuestion.id")
     question_answers = relationship("QuestionAnswers", lazy="select", order_by="QuestionAnswers.id")
     answer_comment = relationship("AnswerComment", lazy="select", order_by="AnswerComment.id")
-    donelessons = relationship('DoneLesson', backref="subject", order_by="DoneLesson.id")
+    donelessons = relationship('StudentExercise', backref="subject", order_by="StudentExercise.id")
     studentsubject = relationship('StudentSubject', backref="subject", order_by="StudentSubject.id")
 
 
@@ -33,5 +33,5 @@ class SubjectLevel(db.Model):
     subject_id = Column(Integer, ForeignKey("subject.id"))
     lesson = relationship('Lesson', backref="subject_level", order_by="Lesson.id")
     exercise = relationship('Exercise', backref="subject_level", order_by="Exercise.id")
-    donelessons = relationship('DoneLesson', backref="subject_level", order_by="DoneLesson.id")
+    # donelessons = relationship('DoneLesson', backref="subject_level", order_by="DoneLesson.id")
     studentcourse = relationship('StudentCourse', backref="subject_level", order_by="StudentCourse.id")

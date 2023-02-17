@@ -332,8 +332,11 @@ def create_comment(answer_id):
                            answer=answer)
 
 
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#  ishlamotti
 @app.route('/my_question', methods=["GET", "POST"])
 def my_question():
     user = get_current_user()
+
     questions = StudentQuestion.query.filter(StudentQuestion.student_id == StudentQuestion.question).all()
     return render_template("my_question/my_question.html", user=user, questions=questions)
