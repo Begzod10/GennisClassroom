@@ -1,0 +1,379 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+
+    background-color: #02C0FC;
+    height: 68px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px 0 10px;
+
+}
+
+.hamburger {
+    display: flex;
+    flex-direction: column;
+}
+
+.hamburger span {
+    width: 36px;
+    background-color: #ffffff;
+    display: block;
+    margin: 2px;
+    height: 4px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.user-name-surname {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 27px;
+    color: #FFFFFF;
+    margin-right: 20px;
+}
+
+.user-photo {
+    border: 1px solid;
+    width: 41px;
+    height: 41px;
+    border-radius: 50%;
+}
+
+.subject {
+    display: flex;
+}
+
+.subject-nav {
+    z-index: 1;
+    background: #737373;
+    width: 25%;
+    height: 100vh;
+    position: fixed;
+    left: -400px;
+    transition: 1s all;
+    top: 60px;
+    padding: 35px 0 0 40px;
+
+}
+
+.active-nav {
+    left: 0;
+}
+
+.subject-name {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 34px;
+    color: #FFFFFF;
+}
+
+.menu-label {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 27px;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.menu-list {
+    transition: 1s all;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    padding-left: 45px;
+    display: none;
+    flex-direction: column;
+
+}
+
+.menu-list a, li {
+    text-decoration: none;
+    color: #FFFFFF;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    margin: 19px 0 30px 0;
+    line-height: 27px;
+
+
+}
+
+.list-active {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, -90% 100%);
+    transition: 1s all;
+    display: flex;
+}
+
+.subject-main {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 100px 0 0 200px;
+    width: 100%;
+}
+
+.subject-question {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 27px;
+    cursor: pointer;
+    color: #FFFFFF;
+}
+
+.subject-video {
+    display: flex;
+    align-items: center;
+    height: 510px;
+    padding-left: 20px;
+    justify-content: center;
+}
+
+.active-video {
+    display: none;
+}
+
+.question {
+    display: none;
+    flex-direction: column;
+    padding: 50px 0 0 20px;
+    align-items: center;
+}
+
+.question-active {
+    display: flex;
+}
+
+.all-question-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 850px;
+
+}
+
+.all-question-btn {
+    width: 202px;
+    height: 40px;
+    background: #02C0FC;
+    border: 1px solid #FFFFFF;
+    color: #FFFFFF;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+}
+
+.my-question-btn {
+    width: 217px;
+    height: 40px;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    color: #4D4D4D;
+    border: 1px solid #4D4D4D;
+}
+
+.create-question-btn {
+    width: 45px;
+    height: 45px;
+    border: 1px solid;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+}
+
+.filter-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 33px;
+
+    width: 75%;
+}
+
+.search-form {
+    position: relative;
+}
+
+.search-form label {
+    position: absolute;
+    top: -13px;
+    background-color: white;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 18px;
+    color: #000000;
+    left: 20px;
+    padding: 5px;
+
+}
+
+.search-form input {
+    width: 298px;
+    outline: none;
+    height: 56px;
+}
+
+.filter-btn {
+    width: 138px;
+    height: 40px;
+    border: 1px solid #4D4D4D;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    color: #4D4D4D;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.filter-btn:active {
+    transform: scale(0.8);
+}
+
+.question__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.question-main {
+    width: 743px;
+    height: 254px;
+    border: 1px solid;
+    padding: 27px 32px 0 42px;
+    margin-top: 40px;
+}
+
+.question-user-item {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.user-name {
+    margin-right: 10px;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 23px;
+
+    color: #000000;
+}
+
+.questions-title {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 27px;
+    text-align: center;
+    color: #000000;
+    margin-top: 30px;
+}
+
+.question-topic {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 29px;
+    color: #000000;
+
+}
+
+.topic-title {
+    margin-top: 11px;
+}
+
+.create-question {
+    display: none;
+    flex-direction: column;
+    padding-left: 200px;
+}
+
+.active-create {
+    display: flex;
+}
+
+.create__question_topic {
+    position: relative;
+    margin-top: 39px;
+}
+
+.create__question_topic label {
+    position: absolute;
+    top: -13px;
+    background-color: white;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 18px;
+    color: #000000;
+    left: 20px;
+    padding: 5px;
+
+}
+
+.create__question_topic input {
+    width: 298px;
+    outline: none;
+    height: 56px;
+}
+
+.create-title {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 30px;
+    color: #000000;
+    text-align: center;
+}
+
+.create__question_text textarea {
+    width: 900px;
+    height: 256px;
+    left: 391px;
+    top: 279px;
+    border: 1px solid #4D4D4D;
+    outline: none;
+    margin-top: 43px;
+    padding: 15px 0 0 15px;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+}

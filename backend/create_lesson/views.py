@@ -337,6 +337,7 @@ def create_comment(answer_id):
 @app.route('/my_question', methods=["GET", "POST"])
 def my_question():
     user = get_current_user()
-
-    questions = StudentQuestion.query.filter(StudentQuestion.student_id == StudentQuestion.question).all()
+    student = Student.query.filter(Student.user_id == user.id).first()
+    # questions = StudentQuestion.query.filter(StudentQuestion.student_id == StudentQuestion.question).all() xato edi
+    questions = StudentQuestion.query.filter(StudentQuestion.student_id == student.id).all()
     return render_template("my_question/my_question.html", user=user, questions=questions)
