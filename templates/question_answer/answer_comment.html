@@ -3,14 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        ul {
+            display: flex;
+            flex-direction: column;
+        }
+
+    </style>
 </head>
 <body>
 <ul>
     {% for ans in answer %}
-        <li><a href="{{ url_for("create_comment", answer_id=ans.id) }}">{{ ans.answer }}</a></li>
+        <div class="comment">
+            <li><a href="{{ url_for("create_comment", answer_id=ans.id) }}">{{ ans.answer }}</a></li>
+        </div>
+        <div class="comment">
+            <input class="input" {% if ans.checked %}checked{% endif  %}  data-id="{{ ans.id }}" type="checkbox">
+        </div>
     {% endfor %}
 </ul>
 
+<script>
+let input = document.querySelectorAll('.input');
+input.forEach(item=>{
+        item.addEventListener("click", function () {
+        fetch('/checks', {
+            method: "POST", body: JSON.stringify({
+                "check": item.checked,
+                "answer_id": item.dataset.id
+            }), headers: {
+                'Content-type': 'application/json'
+            }
+        })
+    })
+})
+
+</script>
 
 </body>
 </html>

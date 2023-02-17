@@ -32,7 +32,8 @@ class User(db.Model):
     platform_id = Column(Integer)
     student = relationship('Student', backref='user', order_by="Student.id", lazy="dynamic")
     question_answers = relationship('QuestionAnswers', backref='user', order_by="QuestionAnswers.id", lazy="dynamic")
-    answer_comment = relationship('AnswerComment', backref='user', order_by="AnswerComment.id", lazy="dynamic")
+    question_answer_comment = relationship('QuestionAnswerComment', backref='user', order_by="QuestionAnswerComment.id",
+                                           lazy="dynamic")
 
     def add(self):
         db.session.add(self)
@@ -101,7 +102,7 @@ class StudentQuestion(db.Model):
     date = Column(DateTime)
     img = Column(Text)
     question_answers = relationship("QuestionAnswers", lazy="select", order_by="QuestionAnswers.id")
-    answer_comment = relationship("AnswerComment", lazy="select", order_by="AnswerComment.id")
+    question_answer_comment = relationship("QuestionAnswerComment", lazy="select", order_by="QuestionAnswerComment.id")
 
 
 class QuestionAnswers(db.Model):
@@ -114,11 +115,11 @@ class QuestionAnswers(db.Model):
     img = Column(Text)
     subject_id = Column(Integer, ForeignKey("subject.id"))
     question_id = Column(Integer, ForeignKey("student_question.id"))
-    answer_comment = relationship("AnswerComment", lazy="select", order_by="AnswerComment.id")
+    question_answer_comment = relationship("QuestionAnswerComment", lazy="select", order_by="QuestionAnswerComment.id")
 
 
-class AnswerComment(db.Model):
-    __tablename__ = "answer_comment"
+class QuestionAnswerComment(db.Model):
+    __tablename__ = "question_answer_comment"
     id = Column(Integer, primary_key=True)
     answer_id = Column(Integer, ForeignKey("question_answers.id"))
     user_id = Column(Integer, ForeignKey('user.id'))
@@ -126,3 +127,4 @@ class AnswerComment(db.Model):
     question_id = Column(Integer, ForeignKey("student_question.id"))
     comment = Column(Text)
     date = Column(Date)
+    check = Column(Boolean)
