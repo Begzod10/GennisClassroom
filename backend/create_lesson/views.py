@@ -196,7 +196,6 @@ def filter_list(level_id):
 
 @app.route('/student_question', methods=["GET", "POST"])
 def student_question():
-
     user = get_current_user()
     student = Student.query.filter(Student.user_id == user.id).first()
     subject = Subject.query.all()
@@ -267,7 +266,6 @@ def student_question():
     #     StudentQuestion.id).all()
     # return render_template("question_answer/student_question.html", student_questions=student_questions,
     #                        student=student)
-
 
 
 @app.route('/question_answer/<int:question_id>', methods=["GET", "POST"])

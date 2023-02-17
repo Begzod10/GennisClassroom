@@ -17,7 +17,6 @@ class Subject(db.Model):
     studentsubject = relationship('StudentSubject', backref="subject", order_by="StudentSubject.id")
 
 
-
 class LevelCategory(db.Model):
     __tablename__ = "level_category"
     id = Column(Integer, primary_key=True)
