@@ -18,6 +18,7 @@ def db_setup(app):
 
 from backend.basics.models import *
 from backend.lessons.models import *
+from backend.done_lesson.models import *
 
 
 class User(db.Model):

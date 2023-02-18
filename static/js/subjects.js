@@ -135,8 +135,8 @@ function sendSubjects(subjects) {
                 'Content-Type': 'application/json'
             },
         })
-        // window.location.href = 'http://127.0.0.1:5000/my_subjects/'
-        // window.location.reload(true)
+        window.location.href = 'http://127.0.0.1:5000/my_subjects/'
+        window.location.reload(true)
     })
 }
 

@@ -15,6 +15,7 @@ def teacher_groups():
 @app.route('/students<int:group_id>', methods=['POST', 'GET'])
 def students(group_id):
     group = Group.query.filter(Group.id == group_id).first()
+    percentag = StudentCourse.query.filter(StudentCourse.course_id == group.course_id).first()
     levels = SubjectLevel.query.filter(SubjectLevel.subject_id == group.subject_id).all()
     if request.method == "POST":
         level = request.form.get("level")
@@ -23,4 +24,5 @@ def students(group_id):
         })
         db.session.commit()
         return redirect(url_for('students', group_id=group_id))
-    return render_template('teacher groups/group students.html', group=group, levels=levels, group_id=group_id)
+    return render_template('teacher groups/group students.html', group=group, levels=levels, group_id=group_id,
+                           percentag=percentag)
