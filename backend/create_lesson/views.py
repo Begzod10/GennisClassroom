@@ -1,5 +1,4 @@
 import requests
-
 from app import *
 from backend.basics.models import *
 from backend.lessons.models import *
@@ -7,46 +6,9 @@ from werkzeug.utils import secure_filename
 from backend.basics.settings import *
 from datetime import datetime
 
-headers = {
-    'Content-type': 'application/json'
-
-}
-
-
-# Copyleaks.set_identity_uri("88e15773-2877-4e58-965e-71625684c962")
-
-def subject_folder():
-    upload_folder = 'static/img/subject_img'
-    return upload_folder
-
-
-def lesson_folder():
-    upload_folder = 'static/img/lesson_img'
-    return upload_folder
-
-
-def question_folder():
-    upload_folder = 'static/img/question'
-    return upload_folder
-
-
-def answer_folder():
-    upload_folder = 'static/img/answer'
-    return upload_folder
-
-
-def checkFile(filename):
-    value = '.' in filename
-    type_file = filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-    return value and type_file
-
 
 @app.route("/subject", methods=["GET", "POST"])
 def subject():
-    myobj = json.dumps({'email': 'rimefara22@gmail.com', 'key': '88e15773-2877-4e58-965e-71625684c962'})
-    response = requests.post('https://id.copyleaks.com/v3/account/login/api', headers=headers, data=myobj)
-
-    print(response)
     if request.method == "POST":
         subject = request.form.get("subject")
         photo = request.files['file']
@@ -352,5 +314,3 @@ def change_status():
     })
     db.session.commit()
     return True
-
-

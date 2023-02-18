@@ -13,6 +13,32 @@ def get_current_user():
     return user_result
 
 
+def subject_folder():
+    upload_folder = 'static/img/subject_img'
+    return upload_folder
+
+
+def lesson_folder():
+    upload_folder = 'static/img/lesson_img'
+    return upload_folder
+
+
+def question_folder():
+    upload_folder = 'static/img/question'
+    return upload_folder
+
+
+def answer_folder():
+    upload_folder = 'static/img/answer'
+    return upload_folder
+
+
+def checkFile(filename):
+    value = '.' in filename
+    type_file = filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return value and type_file
+
+
 to_json = {
     "schools": [
         {
