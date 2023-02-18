@@ -301,7 +301,7 @@ def question_list():
 def answer_comment(question_id):
     user = get_current_user()
     student = Student.query.filter(Student.user_id == user.id).first()
-    answer = QuestionAnswers.query.filter(QuestionAnswers.question_id == question_id).all()
+    answer = QuestionAnswers.query.filter(QuestionAnswers.question_id == question_id).order_by(QuestionAnswers.id).all()
     return render_template('question_answer/answer_comment.html', student=student, question_id=question_id,
                            answer=answer)
 
@@ -322,8 +322,8 @@ def create_comment(answer_id):
     if request.method == "POST":
         comment = request.form.get("comment")
         date = datetime.now()
-        add = AnswerComment(comment=comment, date=date, user_id=student.id,
-                            subject_id=answer.subject_id, question_id=answer.question_id, answer_id=answer_id)
+        add = QuestionAnswerComment(comment=comment, date=date, user_id=student.id,
+                                    subject_id=answer.subject_id, question_id=answer.question_id, answer_id=answer_id)
 
         db.session.add(add)
         db.session.commit()
@@ -337,6 +337,20 @@ def create_comment(answer_id):
 @app.route('/my_question', methods=["GET", "POST"])
 def my_question():
     user = get_current_user()
+    student = Student.query.filter(Student.user_id == user.id).first()
+    questions = StudentQuestion.query.filter(StudentQuestion.student_id == student.id).order_by(
+        StudentQuestion.id).all()
+    return render_template("my_question/my_question.html", student=student, user=user, questions=questions)
 
-    questions = StudentQuestion.query.filter(StudentQuestion.student_id == StudentQuestion.question).all()
-    return render_template("my_question/my_question.html", user=user, questions=questions)
+
+@app.route("/checks", methods=["GET", "POST"])
+def change_status():
+    check = request.get_json()['check']
+    answer_id = request.get_json()['answer_id']
+    QuestionAnswers.query.filter(QuestionAnswers.id == answer_id).update({
+        "checked": check
+    })
+    db.session.commit()
+    return True
+
+
