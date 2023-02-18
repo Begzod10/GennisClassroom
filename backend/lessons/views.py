@@ -72,7 +72,9 @@ def my_lesson(sub_id):
     subject = Subject.query.filter(Subject.id == sub_id).first()
     questions = Exercise.query.filter(Exercise.subject_id == sub_id).all()
     lesson = Lesson.query.filter(Lesson.subject_id == sub_id).first()
-    lesson_list = Lesson.query.filter(Lesson.subject_id == sub_id).all()
+    print(sub_id)
+    group = Group.query.filter(Group.subject_id == sub_id).first()
+    lesson_list = Lesson.query.filter(Lesson.subject_id == sub_id, Lesson.level_id == group.course_id).all()
     level = SubjectLevel.query.filter(SubjectLevel.subject_id == sub_id).order_by(SubjectLevel.id).all()
     done = StudentExercise.query.first()
     info = {

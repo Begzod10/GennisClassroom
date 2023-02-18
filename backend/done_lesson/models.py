@@ -1,6 +1,4 @@
 from backend.models.basic_model import *
-from backend.lessons.models import *
-from backend.basics.models import *
 
 
 class StudentExercise(db.Model):
