@@ -6,8 +6,12 @@
 </head>
 <body>
 <form action="{{ url_for("certificate") }}" method="post">
-    <input type="text" name="name">
-    <input type="text">
+    <select name="course_id" id="">
+        {% for course in courses %}
+            <option value="{{ course.id }}">{{ course.name }}</option>
+        {% endfor %}
+    </select>
+    <button>Get certificate</button>
 </form>
 </body>
 </html>

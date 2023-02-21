@@ -27,6 +27,7 @@ class User(db.Model):
     password = Column(String)
     platform_id = Column(Integer)
     student = relationship('Student', backref='user', order_by="Student.id", lazy="dynamic")
+    teacher = relationship("Teacher", backref="user", order_by="Teacher.id", lazy="select")
     question_answers = relationship('QuestionAnswers', backref='user', order_by="QuestionAnswers.id", lazy="dynamic")
     question_answer_comment = relationship('QuestionAnswerComment', backref='user', order_by="QuestionAnswerComment.id",
                                            lazy="dynamic")

@@ -34,6 +34,6 @@ class SubjectLevel(db.Model):
     subject_id = Column(Integer, ForeignKey("subject.id"))
     lesson = relationship('Lesson', backref="subject_level", order_by="Lesson.id")
     exercise = relationship('Exercise', backref="subject_level", order_by="Exercise.id")
-    # donelessons = relationship('DoneLesson', backref="subject_level", order_by="DoneLesson.id")
+    donelessons = relationship("StudentExercise", backref="subject_level", order_by="StudentExercise.id")
     studentcourse = relationship('StudentCourse', backref="subject_level", order_by="StudentCourse.id")
     certificate = relationship('Certificate', backref="subject_level", order_by="Certificate.id")
