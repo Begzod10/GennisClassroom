@@ -30,6 +30,7 @@ class User(db.Model):
     question_answers = relationship('QuestionAnswers', backref='user', order_by="QuestionAnswers.id", lazy="dynamic")
     question_answer_comment = relationship('QuestionAnswerComment', backref='user', order_by="QuestionAnswerComment.id",
                                            lazy="dynamic")
+    certificate = relationship("Certificate", backref="user", order_by="Certificate.id")
 
     def add(self):
         db.session.add(self)
@@ -91,5 +92,7 @@ class Teacher(db.Model):
 
 from backend.basics.models import *
 from backend.lessons.models import *
+from backend.essay_funtions.models import *
 from backend.question_answer.models import *
 from backend.question_answer.models import *
+from backend.certificate.models import *

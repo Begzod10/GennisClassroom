@@ -3,6 +3,7 @@ import json
 from backend.basics.settings import *
 from werkzeug.security import *
 from backend.models.basic_model import *
+from backend.lessons.student_views import *
 
 from backend.teacher.views import *
 

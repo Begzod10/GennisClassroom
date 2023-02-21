@@ -12,6 +12,7 @@ from backend.essay_funtions.views import *
 from backend.lessons.views import *
 from backend.question_answer.views import *
 from backend.teacher.views import *
+from backend.certificate.views import *
 
 if __name__ == '__main__':
     app.run()

@@ -15,6 +15,7 @@ class Subject(db.Model):
     answer_comment = relationship("QuestionAnswerComment", lazy="select", order_by="QuestionAnswerComment.id")
     donelessons = relationship('StudentExercise', backref="subject", order_by="StudentExercise.id")
     studentsubject = relationship('StudentSubject', backref="subject", order_by="StudentSubject.id")
+    certificate = relationship('Certificate', backref="subject", order_by="Certificate.id")
 
 
 class LevelCategory(db.Model):
@@ -35,3 +36,4 @@ class SubjectLevel(db.Model):
     exercise = relationship('Exercise', backref="subject_level", order_by="Exercise.id")
     # donelessons = relationship('DoneLesson', backref="subject_level", order_by="DoneLesson.id")
     studentcourse = relationship('StudentCourse', backref="subject_level", order_by="StudentCourse.id")
+    certificate = relationship('Certificate', backref="subject_level", order_by="Certificate.id")
